@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración | Crear Nuevo Torneo</title>
+    
+    <link rel="stylesheet" href="torneo.css"> 
+</head>
+<body>
+
+    <div class="form-container">
+        <header class="form-header">
+            <h2>🛠️ Configurar Nuevo Torneo</h2>
+            <p>Define las reglas, el formato y la duración de los partidos.</p>
+        </header>
+
+        <form action="#" method="POST" class="admin-form">
+            
+            <fieldset>
+                <legend>Información General</legend>
+                <div class="form-group">
+                    <label for="name">Nombre del Torneo:</label>
+                    <input type="text" id="name" name="tournament_name" required placeholder="Ej: Copa de Campeones Apertura 2026">
+                </div>
+                <div class="form-group">
+                    <label for="date">Fecha de Inicio Estimada:</label>
+                    <input type="date" id="date" name="start_date" required>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Formato de Juego</legend>
+                <div class="form-group">
+                    <label>Modalidad:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="f5" name="modality" value="5" required>
+                        <label for="f5">Fútbol 5</label>
+
+                        <input type="radio" id="f7" name="modality" value="7">
+                        <label for="f7">Fútbol 7</label>
+
+                        <input type="radio" id="f11" name="modality" value="11">
+                        <label for="f11">Fútbol 11</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="num_teams">Número Máximo de Equipos:</label>
+                    <input type="number" id="num_teams" name="max_teams" min="4" step="2" required placeholder="Ej: 16, 32, 64">
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Reglas de Partido y Duración</legend>
+                
+                <div class="form-group">
+                    <label for="duration">Duración Total del Partido:</label>
+                    <select id="duration" name="total_duration" required onchange="calculateHalfTimes()">
+                        <option value="" disabled selected>Selecciona duración total</option>
+                        <option value="25">25 minutos</option>
+                        <option value="35">35 minutos</option>
+                        <option value="45">45 minutos</option>
+                        <option value="55">55 minutos</option>
+                        <option value="60">60 minutos</option>
+                        <option value="80">80 minutos</option>
+                        <option value="90">90 minutos</option>
+                    </select>
+                </div>
+                
+                <div class="form-group half-time-group">
+                    <label for="half1">Duración 1er Tiempo (Min):</label>
+                    <input type="number" id="half1" name="half1_duration" readonly disabled placeholder="Calculado">
+                </div>
+
+                <div class="form-group half-time-group">
+                    <label for="half2">Duración 2do Tiempo (Min):</label>
+                    <input type="number" id="half2" name="half2_duration" readonly disabled placeholder="Calculado">
+                </div>
+                
+                <div class="form-group">
+                    <label>Reglas de Desempate (Eliminatorias):</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="extra_time" name="extra_time">
+                        <label for="extra_time">Tiempo Extra (Alargue)</label>
+
+                        <input type="checkbox" id="penalties" name="penalties" checked>
+                        <label for="penalties">Penales</label>
+                    </div>
+                </div>
+            </fieldset>
+
+           <fieldset>
+    <legend>Formato de Clasificación</legend>
+    <div class="form-group">
+        <label for="match_format">Fase de Juego:</label> 
+        <select id="match_format" name="match_format" required>
+            <option value="" disabled selected>Selecciona un formato de torneo</option>
+            <option value="single_elimination">Eliminación Simple (1 partido por equipo)</option>
+            <option value="double_round">Doble Ronda (2 partidos por equipo garantizados)</option>
+            <option value="full_bracket">Clasificatoria Estándar (Grupos, 8vos, 4tos, Semi, Final)</option>
+            <option value="custom">Personalizado (Definir fases)</option>
+        </select>
+    </div>
+    </fieldset>
+                
+                <div class="form-group">
+                    <label for="group_size">Equipos por Grupo (si hay fase de grupos):</label>
+                    <input type="number" id="group_size" name="group_size" min="3" max="5" placeholder="Ej: 4 (se activa con Clasificatoria Estándar)">
+                </div>
+            </fieldset>
+
+            <button type="submit" class="submit-button">
+                CREAR Y PUBLICAR TORNEO
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function calculateHalfTimes() {
+            const totalDuration = document.getElementById('duration').value;
+            const halfTimeInput1 = document.getElementById('half1');
+            const halfTimeInput2 = document.getElementById('half2');
+            
+            if (totalDuration) {
+                const halfDuration = Math.floor(totalDuration / 2); // Divide y redondea abajo
+                halfTimeInput1.value = halfDuration;
+                halfTimeInput2.value = totalDuration - halfDuration; // El resto
+            } else {
+                halfTimeInput1.value = "";
+                halfTimeInput2.value = "";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+/* RESET BÁSICO Y TIPOGRAFÍA */
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    line-height: 1.6; 
+    background-color: #ffffff; /* Fondo claro para el cuerpo */
+    color: #333; /* Color de texto general */
+}
+
+/* ESTILOS DE CABECERA Y CTA */
+.header { 
+    text-align: center; 
+    padding: 80px 20px 40px; /* Más espacio arriba */
+    color: white; 
+    background-color: #004d40; /* Verde oscuro (como el césped) */
+    background-image: url('soccer-field-texture.jpg'); /* Opcional: añade una imagen de fondo de cancha */
+    background-size: cover;
+}
+
+h1 { 
+    margin-top: 0; 
+    font-size: 3em; /* Más grande en la cabecera */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.cta-button { 
+    display: inline-block; 
+    background-color: #ff6f00; /* Naranja vibrante para el CTA */
+    color: white; 
+    padding: 15px 30px; 
+    text-decoration: none; 
+    font-size: 1.2em; 
+    font-weight: bold; 
+    border-radius: 50px; /* Botón redondeado */
+    margin-top: 20px; 
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #e65100; /* Oscurece al pasar el ratón */
+}
+
+/* BARRA DE INFORMACIÓN CLAVE */
+.info-bar { 
+    background-color: #4db6ac; /* Tono de verde más claro */
+    color: white; 
+    padding: 15px 20px; 
+    display: flex; 
+    justify-content: space-around; 
+    flex-wrap: wrap; 
+    font-weight: bold;
+}
+
+.info-bar span {
+    margin: 5px 10px;
+}
+
+/* SECCIONES GENERALES */
+.section { 
+    padding: 40px 20px; 
+    max-width: 900px; 
+    margin: 0 auto; 
+    text-align: center;
+}
+
+.section-light { 
+    background-color: #f4f4f4; /* Fondo gris claro */
+}
+
+h2 {
+    color: #004d40;
+    font-size: 2em;
+    margin-bottom: 30px;
+}
+
+/* ESTILOS DE BENEFICIOS */
+.benefits-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsivo simple */
+    gap: 30px; 
+    margin-top: 30px; 
+    text-align: left;
+}
+
+.benefit-item { 
+    background: white; 
+    padding: 25px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+    border-top: 5px solid #ff6f00;
+}
+
+/* PRUEBA SOCIAL */
+.social-proof { 
+    background-color: #ffffff;
+}
+
+.testimonial { 
+    max-width: 600px;
+    margin: 30px auto;
+    border-left: 5px solid #004d40; /* Línea verde */
+    padding: 15px 15px 15px 25px; 
+    font-style: italic; 
+    background-color: #e0f2f1; /* Fondo muy claro para el testimonio */
+    border-radius: 0 8px 8px 0;
+}
+
+/* FORMULARIO */
+.inscription-form {
+    background: white; 
+    padding: 30px; 
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    text-align: left;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.inscription-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.inscription-form input[type="text"], 
+.inscription-form input[type="email"],
+.inscription-form select {
+    width: 100%; 
+    padding: 12px; 
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Importante para que el padding no desborde */
+}
+
+.submit-button {
+    width: 100%; 
+    border: none;
+    cursor: pointer;
+}
+
+.reglamento-link a {
+    color: #ff6f00;
+    text-decoration: none;
+}
+.reglamento-link a:hover {
+    text-decoration: underline;
+}
+
+/* PIE DE PÁGINA */
+.footer { 
+    text-align: center; 
+    padding: 20px; 
+    background-color: #333; 
+    color: white; 
+    font-size: 0.9em; 
+}
+
+.footer-link {
+    color: #90caf9; /* Azul claro para enlaces en el pie de página */
+    text-decoration: none;
+}
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+/* MEDIA QUERIES (PARA ADAPTACIÓN MÓVIL) */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    .info-bar {
+        flex-direction: column; /* Apila la información en dispositivos pequeños */
+    }
+    
+    .header {
+        padding: 60px 15px 30px;
+    }
+}

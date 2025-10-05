@@ -1,0 +1,112 @@
+/* Puedes usar los mismos estilos que en login_styles.css */
+
+/* VARIABLES DE COLOR (Opcional pero útil) */
+:root {
+    --primary-color: #004d40; /* Verde Oscuro */
+    --accent-color: #ff6f00; /* Naranja Vibrante */
+    --light-bg: #f4f4f4;
+}
+
+/* ESTILOS BASE */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--light-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* CONTENEDOR PRINCIPAL DEL LOGIN/REGISTRO */
+.login-container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; 
+}
+
+/* CABECERA */
+.login-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.login-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    font-size: 1.8em;
+}
+
+.login-header p {
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* FORMULARIO */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"],
+.login-form select { /* Se añade el selector 'select' para la posición */
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+.login-form input:focus,
+.login-form select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 111, 0, 0.4);
+}
+
+/* BOTÓN DE ACCESO/REGISTRO */
+.login-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.login-button:hover {
+    background-color: #e65100;
+}
+
+/* PIE DE PÁGINA */
+.login-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9em;
+}
+
+.login-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}

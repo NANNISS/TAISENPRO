@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copa de Campeones | Crear Perfil de Jugador</title>
+    
+    <link rel="stylesheet" href="login.css"> 
+</head>
+<body>
+
+    <div class="login-container">
+        <header class="login-header">
+            <h2>Crear Perfil de Jugador 👤</h2>
+            <p>¡Bienvenido/a a la Copa de Campeones! Completa tus datos para unirte a tu equipo.</p>
+        </header>
+
+        <form action="#" method="POST" class="login-form">
+            <div class="form-group">
+                <label for="full_name">Nombre Completo:</label>
+                <input type="text" id="full_name" name="full_name" required placeholder="Ej: Juan Pérez">
+            </div>
+
+            <div class="form-group">
+                <label for="position">Posición Preferida:</label>
+                <select id="position" name="position" required>
+                    <option value="" disabled selected>Selecciona tu posición</option>
+                    <option value="Arquero">Arquero (Portero)</option>
+                    <option value="Defensa">Defensa</option>
+                    <option value="Mediocampista">Mediocampista</option>
+                    <option value="Delantero">Delantero (Atacante)</option>
+                    <option value="Comodin">Comodín</option>
+                </select>
+            </div>
+            
+            <hr style="border-top: 1px solid #ddd; margin: 20px 0;">
+
+            <div class="form-group">
+                <label for="password">Elige tu Contraseña:</label>
+                <input type="password" id="password" name="password" required placeholder="Mínimo 8 caracteres">
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirmar Contraseña:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required placeholder="Repite la contraseña">
+            </div>
+
+            <button type="submit" class="login-button">
+                FINALIZAR REGISTRO
+            </button>
+        </form>
+
+        <footer class="login-footer">
+            <p>¿Ya tienes cuenta? <a href="login.html">Inicia Sesión aquí</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+/* VARIABLES */
+:root {
+    --primary-color: #1a237e; /* Azul oscuro (Admin) */
+    --secondary-color: #ffb300; /* Naranja/Amarillo (Acento) */
+    --background-color: #eceff1; /* Gris claro de fondo */
+    --border-color: #cfd8dc;
+}
+
+/* BASE Y CONTENEDOR */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px;
+}
+
+/* CABECERA */
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 15px;
+}
+
+.form-header h2 {
+    color: var(--primary-color);
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+/* AGRUPACIÓN DE CAMPOS (FIELDSET) */
+fieldset {
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 6px;
+}
+
+legend {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 0 10px;
+}
+
+/* GRUPOS DE FORMULARIO */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+}
+
+/* INPUTS Y SELECTS */
+.admin-form input[type="text"],
+.admin-form input[type="number"],
+.admin-form input[type="date"],
+.admin-form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+.admin-form input:focus,
+.admin-form select:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+}
+
+/* GRUPOS DE RADIO Y CHECKBOX */
+.radio-group, .checkbox-group {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.radio-group input[type="radio"],
+.checkbox-group input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.radio-group label,
+.checkbox-group label {
+    font-weight: normal;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* INPUTS DESHABILITADOS (tiempos) */
+.half-time-group input[disabled] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    color: #6c757d;
+}
+
+/* BOTÓN DE ENVÍO */
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.submit-button:hover {
+    background-color: #ffc107;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .form-container {
+        padding: 20px 15px;
+    }
+    .radio-group, .checkbox-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
