@@ -1,0 +1,52 @@
+/* =================================== */
+/* AJUSTES PARA EL FORMULARIO DE PERFIL */
+/* =================================== */
+
+.login-form fieldset {
+    border: 1px solid #e0e0e0; /* Borde suave para agrupar */
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+}
+
+.login-form legend {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 0 10px;
+}
+
+/* Estilo para los campos de solo lectura (pre-cargados) */
+.login-form input[readonly] {
+    background-color: #f7f7f7; /* Fondo gris para indicar que no es editable */
+    cursor: not-allowed;
+    color: #666;
+    font-weight: bold;
+}
+
+/* Estilo para el campo de texto largo (alergias) */
+.login-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+/* Estilo para notas pequeñas */
+.login-form small {
+    display: block;
+    color: #999;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+}
+
+/* Ajustar el tamaño del contenedor si es necesario */
+@media (min-width: 500px) {
+    .login-container {
+        max-width: 500px;
+    }
+}

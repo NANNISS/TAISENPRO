@@ -1,0 +1,87 @@
+/* =================================== */
+/* ESTILOS ESPECÍFICOS PARA GESTIÓN DE EQUIPOS */
+/* =================================== */
+
+.team-list-section {
+    text-align: left;
+}
+
+/* Tablas generales y de jugadores */
+.team-status-table, .player-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.team-status-table th, .team-status-table td,
+.player-table th, .player-table td {
+    border: 1px solid var(--border-color);
+    padding: 12px 8px;
+    text-align: left;
+}
+
+.team-status-table th {
+    background-color: var(--primary-color);
+    color: white;
+    text-transform: uppercase;
+}
+
+.team-status-table tr:nth-child(even) {
+    background-color: #f7f7f7;
+}
+
+.team-status-table tr:hover {
+    background-color: #e3f2fd;
+}
+
+/* ESTADOS VISUALES (BADGES) */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Estado: COMPLETO */
+.status-complete {
+    background-color: #4caf50; /* Verde */
+    color: white;
+}
+
+/* Estado: INCOMPLETO/PENDIENTE */
+.status-pending {
+    background-color: #ff9800; /* Naranja/Amarillo */
+    color: white;
+}
+
+/* SECCIÓN DE DETALLE DE JUGADORES */
+.player-detail-section {
+    text-align: left;
+    padding: 20px 0;
+}
+
+.player-detail-section h3 {
+    color: var(--primary-color);
+}
+
+.player-table tbody td:first-child {
+    font-weight: bold; /* Número de camiseta */
+}
+
+.back-button {
+    margin-top: 25px;
+    padding: 10px 20px;
+    width: auto;
+    background-color: #607d8b; /* Gris oscuro para el botón de "Volver" */
+}
+
+.back-button:hover {
+    background-color: #455a64;
+}
+
+/* Clase para ocultar secciones (usada por JS) */
+.hidden {
+    display: none !important;
+}

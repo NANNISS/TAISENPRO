@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración | Gestión de Equipos</title>
+    
+    <link rel="stylesheet" href="admin_styles.css"> 
+</head>
+<body class="admin-body">
+
+    <div class="form-container">
+        <header class="form-header">
+            <h2>👥 Gestión y Estado de Equipos</h2>
+            <p>Supervisa el número de jugadores registrados por equipo.</p>
+        </header>
+
+        <section class="team-list-section">
+            <h3>Estado de Inscripciones</h3>
+            
+            <table class="match-table team-status-table">
+                <thead>
+                    <tr>
+                        <th>Equipo</th>
+                        <th>Modalidad</th>
+                        <th>Jugadores (Actual/Máx)</th>
+                        <th>Estado de Cupos</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-team-id="1">
+                        <td>Atlético Rayos</td>
+                        <td>Fútbol 11</td>
+                        <td>12 / 23</td>
+                        <td><span class="status-badge status-complete">COMPLETO</span></td>
+                        <td><a href="#player-detail" class="action-link view-players-btn">Ver Jugadores</a></td>
+                    </tr>
+                    <tr data-team-id="2">
+                        <td>Invictos FC</td>
+                        <td>Fútbol 7</td>
+                        <td>5 / 15</td>
+                        <td><span class="status-badge status-pending">INCOMPLETO</span></td>
+                        <td><a href="#player-detail" class="action-link view-players-btn">Ver Jugadores</a></td>
+                    </tr>
+                    <tr data-team-id="3">
+                        <td>Los Panteras</td>
+                        <td>Fútbol 5</td>
+                        <td>3 / 10</td>
+                        <td><span class="status-badge status-pending">INCOMPLETO</span></td>
+                        <td><a href="#player-detail" class="action-link view-players-btn">Ver Jugadores</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <hr style="margin: 40px 0;">
+        
+        <section id="player-detail" class="player-detail-section hidden">
+            <h3 id="detail-title">Plantilla: Atlético Rayos (Fútbol 11)</h3>
+            <p>Máximo 23 jugadores (11 titulares obligatorios).</p>
+            
+            <table class="match-table player-table">
+                <thead>
+                    <tr>
+                        <th>N° Camiseta</th>
+                        <th>Nombre del Jugador</th>
+                        <th>Posición</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="player-detail-body">
+                    <tr>
+                        <td>1</td>
+                        <td>Marcos Silva (Capitán)</td>
+                        <td>Arquero</td>
+                        <td>Titular</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Daniel Vargas</td>
+                        <td>Delantero</td>
+                        <td>Titular</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>Carlos Nieto</td>
+                        <td>Mediocampista</td>
+                        <td>Suplente</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <button class="submit-button back-button">
+                ← Volver a Listado de Equipos
+            </button>
+        </section>
+
+    </div>
+    
+    <script>
+        document.querySelectorAll('.view-players-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('.team-list-section').classList.add('hidden');
+                document.getElementById('player-detail').classList.remove('hidden');
+                // En una aplicación real, aquí se cargaría la data del equipo por AJAX/fetch
+                const teamName = e.target.closest('tr').querySelector('td').textContent;
+                document.getElementById('detail-title').textContent = `Plantilla: ${teamName}`;
+            });
+        });
+
+        document.querySelector('.back-button').addEventListener('click', () => {
+            document.getElementById('player-detail').classList.add('hidden');
+            document.querySelector('.team-list-section').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

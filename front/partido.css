@@ -1,0 +1,129 @@
+/* =================================== */
+/* ESTILOS ESPECÍFICOS PARA DASHBOARD DE PARTIDOS */
+/* =================================== */
+
+.live-matches-section h3 {
+    color: #d32f2f; /* Rojo para destacar "EN VIVO" */
+}
+
+/* GRID para las tarjetas de partidos en vivo */
+.live-match-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Tarjeta de Partido en Vivo */
+.match-card {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    text-align: center;
+}
+
+.live-card {
+    border-top: 5px solid #d32f2f; /* Línea roja superior */
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+}
+
+.live-status {
+    background-color: #d32f2f;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.match-time {
+    color: #666;
+    font-weight: 600;
+}
+
+/* Marcador */
+.score-board {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 15px 0;
+    padding: 10px 0;
+    border-top: 1px dashed #eee;
+    border-bottom: 1px dashed #eee;
+}
+
+.score-board .team-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    width: 35%;
+}
+
+.score-board .score-vs {
+    font-size: 2.2em;
+    font-weight: 900;
+    color: var(--primary-color);
+}
+
+/* Detalles del Partido */
+.match-details {
+    text-align: left;
+    font-size: 0.9em;
+    padding-top: 10px;
+}
+
+/* Botones de Acción en Vivo */
+.action-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.fine-button {
+    background-color: #ff9800; /* Naranja para registrar multas/incidentes */
+}
+.fine-button:hover {
+    background-color: #e68900;
+}
+
+
+/* SECCIÓN DE PRÓXIMOS PARTIDOS */
+.upcoming-matches-section {
+    text-align: left;
+}
+
+.upcoming-schedule-table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.upcoming-schedule-table th {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.start-button {
+    background-color: #4caf50; /* Verde para iniciar */
+}
+.assign-button {
+    background-color: #2196f3; /* Azul para asignar */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .live-match-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Partidos y Resultados</title>
+    
+    <link rel="stylesheet" href="admin_styles.css"> 
+</head>
+<body class="admin-body">
+
+    <div class="form-container">
+        <header class="form-header">
+            <h2>📊 Dashboard de Partidos en Vivo y Calendario</h2>
+            <p>Sigue los resultados en tiempo real y gestiona los próximos encuentros.</p>
+        </header>
+
+        <section class="live-matches-section">
+            <h3>🔴 Partidos en Disputa (En Vivo)</h3>
+            
+            <div class="live-match-grid">
+                <div class="match-card live-card" data-match-id="live_1">
+                    <div class="match-header">
+                        <span class="live-status">EN JUEGO</span>
+                        <span class="match-time">⏱️ Minuto 45</span>
+                    </div>
+                    
+                    <div class="score-board">
+                        <span class="team-name">Atlético Rayos</span>
+                        <span class="score-vs">3 - 1</span>
+                        <span class="team-name">Invictos FC</span>
+                    </div>
+                    
+                    <div class="match-details">
+                        <p><strong>Cancha:</strong> N°1 - Central</p>
+                        <p><strong>Árbitro:</strong> Juan Pérez</p>
+                        <p><strong>Faltas Registradas:</strong> 12</p>
+                    </div>
+
+                    <button class="action-button fine-button">
+                        + Registrar Incidente
+                    </button>
+                </div>
+
+                <div class="match-card live-card" data-match-id="live_2">
+                    <div class="match-header">
+                        <span class="live-status">EN DESCANSO</span>
+                        <span class="match-time">⏸️ Medio Tiempo</span>
+                    </div>
+                    
+                    <div class="score-board">
+                        <span class="team-name">Halcones F.C.</span>
+                        <span class="score-vs">0 - 0</span>
+                        <span class="team-name">FC Leyenda</span>
+                    </div>
+                    
+                    <div class="match-details">
+                        <p><strong>Cancha:</strong> N°3 - Sede Norte</p>
+                        <p><strong>Árbitro:</strong> María Gómez</p>
+                        <p><strong>Faltas Registradas:</strong> 8</p>
+                    </div>
+
+                    <button class="action-button fine-button">
+                        + Registrar Incidente
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        
+        <section class="upcoming-matches-section">
+            <h3>➡️ Partidos a Disputarse (Calendario)</h3>
+            
+            <table class="match-table upcoming-schedule-table">
+                <thead>
+                    <tr>
+                        <th>Torneo</th>
+                        <th>Fecha y Hora</th>
+                        <th>Partido</th>
+                        <th>Cancha Asignada</th>
+                        <th>Árbitro Asignado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Apertura 2026</td>
+                        <td>Hoy - 22:00</td>
+                        <td>Dragones vs. Titanes</td>
+                        <td>N°4 - Sede Sur</td>
+                        <td>Pedro López</td>
+                        <td><button class="action-button start-button">Iniciar Partido</button></td>
+                    </tr>
+                    <tr>
+                        <td>Copa Amigos</td>
+                        <td>Mañana - 19:30</td>
+                        <td>FC Tigres vs. Los Astros</td>
+                        <td>N°2 - Central</td>
+                        <td>— (Pendiente)</td>
+                        <td><button class="action-button assign-button">Asignar Árbitro</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </div>
+
+</body>
+</html>

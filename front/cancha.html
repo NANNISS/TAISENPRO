@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración | Gestión de Canchas</title>
+    
+    <link rel="stylesheet" href="cancha.css"> 
+</head>
+<body class="admin-body">
+
+    <div class="form-container">
+        <header class="form-header">
+            <h2>🏟️ Gestión de Canchas</h2>
+            <p>Registro y calendario de los espacios deportivos.</p>
+        </header>
+
+        <section id="register_field_form">
+            <h3>➕ Registrar Nueva Cancha</h3>
+            
+            <form action="#" method="POST" class="admin-form">
+                <fieldset>
+                    <legend>Detalles de la Cancha</legend>
+
+                    <div class="form-group">
+                        <label for="field_name">Nombre de la Cancha:</label>
+                        <input type="text" id="field_name" name="field_name" required placeholder="Ej: Complejo Central">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="field_number">Número/Identificador:</label>
+                        <input type="text" id="field_number" name="field_number" required placeholder="Ej: Cancha N°1 o Principal">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Ubicación (Dirección):</label>
+                        <input type="text" id="location" name="location" required placeholder="Ej: Av. Los Libertadores 123">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type">Tipo de Superficie:</label>
+                        <select id="type" name="surface_type" required>
+                            <option value="" disabled selected>Selecciona la superficie</option>
+                            <option value="grass">Césped Natural</option>
+                            <option value="synthetic">Césped Sintético</option>
+                            <option value="hard">Cemento/Dura</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="submit-button">
+                        GUARDAR CANCHA
+                    </button>
+                </fieldset>
+            </form>
+        </section>
+
+       
+        
+        <section class="field-calendar-section">
+            <h3>🗓️ Partidos a Disputarse (Próximas 72h)</h3>
+            
+            <div class="form-group">
+                <label for="view_field">Ver Calendario de:</label>
+                <select id="view_field" name="view_field_select">
+                    <option value="all">Todas las Canchas</option>
+                    <option value="field_1">Cancha N°1 - Complejo Central</option>
+                    <option value="field_2">Cancha N°2 - Sede Norte</option>
+                    </select>
+            </div>
+
+            <table class="match-table field-schedule">
+                <thead>
+                    <tr>
+                        <th>Fecha y Hora</th>
+                        <th>Cancha</th>
+                        <th>Partido</th>
+                        <th>Torneo</th>
+                        <th>Árbitro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>10/Oct - 18:00</td>
+                        <td>Cancha N°1 (Central)</td>
+                        <td>Rayos vs. Invictos</td>
+                        <td>Apertura 2026</td>
+                        <td>Juan Pérez</td>
+                    </tr>
+                    <tr>
+                        <td>10/Oct - 20:30</td>
+                        <td>Cancha N°2 (Norte)</td>
+                        <td>Halcones vs. FC Leyenda</td>
+                        <td>Copa Amigos</td>
+                        <td>María Gómez</td>
+                    </tr>
+                    <tr>
+                        <td>11/Oct - 19:00</td>
+                        <td>Cancha N°1 (Central)</td>
+                        <td>Dragones vs. Titanes</td>
+                        <td>Apertura 2026</td>
+                        <td>—</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </div>
+
+</body>
+</html>

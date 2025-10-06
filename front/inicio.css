@@ -1,0 +1,170 @@
+/* --- estilos_modernos.css --- */
+
+/* 1. Variables y Reset */
+:root {
+    --color-fondo: #121212; /* Negro muy oscuro (Dark Mode base) */
+    --color-principal: #00bcd4; /* Cian Vibrante (Acento) */
+    --color-texto-claro: #f0f0f0; /* Blanco suave */
+    --color-tarjeta: #1e1e1e; /* Color de fondo para elementos */
+    --font-principal: 'Poppins', sans-serif;
+    --sombra-elevada: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-principal);
+    color: var(--color-texto-claro);
+    background-color: var(--color-fondo);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. Header (Encabezado) */
+.header {
+    padding: 20px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-tarjeta);
+    border-bottom: 1px solid #2a2a2a;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 800; /* Extra bold */
+    color: var(--color-principal);
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+/* 3. Sección Principal (Hero) */
+.hero-modern {
+    flex-grow: 1; /* Ocupa el espacio restante */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 100px 20px;
+    
+    /* Efecto creativo de fondo sutil */
+    background: radial-gradient(circle at top left, #1e1e1e, #121212);
+}
+
+.hero-content {
+    max-width: 900px;
+    /* Efecto de "cristal" flotante y moderno */
+    background: rgba(30, 30, 30, 0.8);
+    padding: 40px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--sombra-elevada);
+}
+
+.hero-modern h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.highlight {
+    color: var(--color-principal);
+    /* Sutil efecto 3D */
+    text-shadow: 0 0 5px rgba(0, 188, 212, 0.7);
+}
+
+.hero-modern p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #b0b0b0;
+    margin-bottom: 40px;
+}
+
+/* 4. Botones CTA (Call to Action) */
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    text-decoration: none;
+    font-weight: 600;
+    padding: 15px 35px;
+    border-radius: 50px; /* Bordes redondos */
+    transition: all 0.3s ease-in-out;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-login {
+    background: var(--color-principal);
+    color: var(--color-fondo);
+    border: 2px solid var(--color-principal);
+}
+
+.btn-login:hover {
+    background: transparent;
+    color: var(--color-principal);
+    box-shadow: 0 0 15px var(--color-principal);
+}
+
+.btn-view {
+    background: transparent;
+    color: var(--color-texto-claro);
+    border: 2px solid #555;
+}
+
+.btn-view:hover {
+    background: #333;
+    border-color: #333;
+}
+
+/* 5. Footer */
+.footer {
+    background-color: var(--color-tarjeta);
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.85rem;
+    color: #888;
+    border-top: 1px solid #2a2a2a;
+}
+
+/* 6. Media Queries para Móviles */
+@media (max-width: 768px) {
+    .header {
+        padding: 15px 20px;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .hero-modern h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-modern p {
+        font-size: 1rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px 25px;
+    }
+}

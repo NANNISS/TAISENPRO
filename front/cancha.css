@@ -1,0 +1,50 @@
+/* =================================== */
+/* ESTILOS ESPECÍFICOS PARA CANCHAS */
+/* =================================== */
+
+.field-calendar-section {
+    text-align: left;
+}
+
+/* Tabla de Calendario de Partidos */
+.field-schedule {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.field-schedule th, .field-schedule td {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.field-schedule th {
+    background-color: var(--primary-color);
+    color: white;
+    text-transform: uppercase;
+}
+
+.field-schedule tbody tr:nth-child(even) {
+    background-color: #f7f7f7;
+}
+
+.field-schedule tbody tr:hover {
+    background-color: #e3f2fd; /* Un azul muy claro al pasar el ratón */
+}
+
+/* Ajustes menores para el formulario de canchas */
+#register_field_form .submit-button {
+    background-color: #1a73e8; /* Un color de botón diferente, como el azul de Google, para 'Crear' */
+}
+
+#register_field_form .submit-button:hover {
+    background-color: #0b59c2;
+}
+
+/* Asegurar que el select de la vista de calendario se vea bien */
+.field-calendar-section select {
+    max-width: 300px; /* Limitar el ancho para que no ocupe todo el contenedor */
+    display: block;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Jugador | Datos Obligatorios</title>
+    
+    <link rel="stylesheet" href="login_styles.css"> 
+</head>
+<body>
+
+    <div class="login-container" >
+        <header class="login-header">
+            <h2>Datos Obligatorios del Jugador 📝</h2>
+            <p>Completa tu información personal, médica y el número de camiseta.</p>
+        </header>
+
+        <form action="#" method="POST" class="login-form">
+            
+            <fieldset>
+                <legend>Información de Cuenta</legend>
+                <div class="form-group">
+                    <label for="full_name">Nombre Completo:</label>
+                    <input type="text" id="full_name" name="full_name" value="Juan Pérez" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="position">Posición Registrada:</label>
+                    <input type="text" id="position" name="position" value="Mediocampista" readonly>
+                </div>
+            </fieldset>
+
+            
+
+            <fieldset>
+                <legend>Datos de Identificación y Juego</legend>
+
+                <div class="form-group">
+                    <label for="ci">Cédula de Identidad (CI):</label>
+                    <input type="text" id="ci" name="ci" required placeholder="N° de Cédula o Identificación">
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Edad:</label>
+                    <input type="number" id="age" name="age" min="16" max="99" required placeholder="Tu edad actual">
+                </div>
+                
+                <div class="form-group">
+                    <label for="jersey_number">Número de Camiseta Deseado:</label>
+                    <input type="number" id="jersey_number" name="jersey_number" min="1" max="99" required placeholder="Ej: 10, 7, 21">
+                    <small>Este número estará sujeto a la disponibilidad del equipo.</small>
+                </div>
+            </fieldset>
+
+           
+
+            <fieldset>
+                <legend>Información Médica de Seguridad</legend>
+
+                <div class="form-group">
+                    <label for="blood_type">Tipo de Sangre:</label>
+                    <select id="blood_type" name="blood_type" required>
+                        <option value="" disabled selected>Selecciona tu Tipo de Sangre</option>
+                        <option value="A+">A Positivo (A+)</option>
+                        <option value="A-">A Negativo (A-)</option>
+                        <option value="B+">B Positivo (B+)</option>
+                        <option value="B-">B Negativo (B-)</option>
+                        <option value="AB+">AB Positivo (AB+)</option>
+                        <option value="AB-">AB Negativo (AB-)</option>
+                        <option value="O+">O Positivo (O+)</option>
+                        <option value="O-">O Negativo (O-)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="allergies">Alergias Conocidas:</label>
+                    <textarea id="allergies" name="allergies" rows="3" placeholder="Ej: Penicilina, polen, frutos secos. Escribe 'Ninguna' si no tienes."></textarea>
+                </div>
+
+            </fieldset>
+
+
+            <button type="submit" class="login-button">
+                GUARDAR PERFIL Y CONTINUAR
+            </button>
+        </form>
+
+        <footer class="login-footer">
+            <p>Tus datos médicos se usarán únicamente en caso de emergencia.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

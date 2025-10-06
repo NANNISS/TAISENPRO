@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Árbitro | Panel de Control</title>
+    
+    <link rel="stylesheet" href="arbitro.css"> 
+    </head>
+<body class="referee-body">
+
+    <div class="form-container">
+        <header class="form-header">
+            <h2>⚽ Panel de Árbitros - [Nombre del Árbitro]</h2>
+            <p>Vista de partidos asignados y registro de incidentes.</p>
+        </header>
+
+        <section class="assigned-matches-section">
+            <h3>📅 Mis Próximos Partidos</h3>
+            
+            <table class="match-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Torneo</th>
+                        <th>Partido</th>
+                        <th>Cancha</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>10/Mar</td>
+                        <td>18:00</td>
+                        <td>Apertura 2026</td>
+                        <td>Invictos vs. Rayos</td>
+                        <td>Cancha N°3</td>
+                        <td><a href="#fines_form" class="action-link">Registrar Acta</a></td>
+                    </tr>
+                    <tr>
+                        <td>12/Mar</td>
+                        <td>20:30</td>
+                        <td>Copa Amigos</td>
+                        <td>Halcones vs. FC Leyenda</td>
+                        <td>Cancha N°1</td>
+                        <td><a href="#fines_form" class="action-link">Registrar Acta</a></td>
+                    </tr>
+                    <tr>
+                        <td>17/Mar</td>
+                        <td>19:00</td>
+                        <td>Apertura 2026</td>
+                        <td>Dragones vs. Titanes</td>
+                        <td>Cancha N°4</td>
+                        <td><a href="#fines_form" class="action-link">Registrar Acta</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+        
+        <section id="fines_form">
+            <h3>🚨 Registro de Multas / Incidentes</h3>
+            <p>Selecciona el partido para el que deseas cargar una multa o sanción disciplinaria.</p>
+
+            <form action="#" method="POST" class="admin-form incident-form">
+                <fieldset>
+                    <legend>Detalles del Incidente</legend>
+
+                    <div class="form-group">
+                        <label for="match_select">Partido Relacionado:</label>
+                        <select id="match_select" name="related_match" required>
+                            <option value="" disabled selected>Selecciona el partido (Ej. Invictos vs. Rayos)</option>
+                            <option value="match_1">10/Mar - Invictos vs. Rayos</option>
+                            <option value="match_2">12/Mar - Halcones vs. FC Leyenda</option>
+                            <option value="match_3">17/Mar - Dragones vs. Titanes</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="offender_type">Tipo de Infractor:</label>
+                        <select id="offender_type" name="offender_type" required>
+                            <option value="player">Jugador</option>
+                            <option value="team">Equipo (Multa colectiva)</option>
+                            <option value="coach">Entrenador/DT</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="offender_name">Nombre/Equipo Infractor:</label>
+                        <input type="text" id="offender_name" name="offender_name" required placeholder="Ej: #9 Juan Pérez o Equipo Rayos">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reason">Motivo/Infracción:</label>
+                        <select id="reason" name="fine_reason" required>
+                            <option value="tarjeta_amarilla">Tarjeta Amarilla (Amonestación)</option>
+                            <option value="tarjeta_roja">Tarjeta Roja (Expulsión)</option>
+                            <option value="multa_admin">Multa Administrativa (p. ej. Demora)</option>
+                            <option value="lenguaje">Lenguaje o conducta inapropiada</option>
+                            <option value="violencia">Violencia física/verbal</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fine_amount">Monto de la Multa (si aplica):</label>
+                        <input type="number" id="fine_amount" name="fine_amount" min="0" value="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="details">Detalles y Minuto del Incidente:</label>
+                        <textarea id="details" name="incident_details" rows="4" placeholder="Breve descripción de lo ocurrido y el minuto de juego."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-button">
+                        GUARDAR INCIDENTE Y MULTA
+                    </button>
+                </fieldset>
+            </form>
+        </section>
+
+    </div>
+
+</body>
+</html>

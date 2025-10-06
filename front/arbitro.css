@@ -1,0 +1,70 @@
+/* =================================== */
+/* ESTILOS ESPECÍFICOS PARA EL ÁRBITRO */
+/* =================================== */
+
+.referee-body .form-header h2 {
+    color: #d32f2f; /* Rojo de árbitro para el título */
+}
+
+/* TABLA DE PARTIDOS ASIGNADOS */
+.assigned-matches-section {
+    text-align: left;
+}
+
+.match-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.match-table th, .match-table td {
+    border: 1px solid #ddd;
+    padding: 12px 8px;
+    text-align: left;
+}
+
+.match-table th {
+    background-color: var(--primary-color); /* Azul Admin */
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.match-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Fondo de filas alternado */
+}
+
+.match-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+.action-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.action-link:hover {
+    text-decoration: underline;
+}
+
+/* ESTILO DEL BOTÓN DE MULTA */
+.incident-form .submit-button {
+    background-color: #d32f2f; /* Rojo fuerte para la acción de multa */
+}
+
+.incident-form .submit-button:hover {
+    background-color: #c62828;
+}
+
+/* ESTILO PARA TEXTAREA (DETALLES) */
+.admin-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+    resize: vertical; /* Permite redimensionar verticalmente */
+}
