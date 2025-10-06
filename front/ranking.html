@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking de Jugadores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tablaClasificatoria.css"> 
+    <style>
+        /* Pequeño ajuste local para el título del ranking */
+        .header h1 {
+            color: #FFD700; /* Oro */
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+        .metric-header {
+            color: #FFD700 !important;
+            border-bottom: 3px solid #FFD700 !important;
+        }
+        .rank-number {
+            font-size: 1.2em;
+            font-weight: 800;
+        }
+        /* Estilo especial para el Top 3 */
+        .top-rank {
+            background-color: #2b2b2b;
+        }
+        .top-rank .rank-number {
+            color: #FFD700;
+            text-shadow: 0 0 5px #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>RANKING DE GOLEADORES | LIGA 2025</h1>
+    </header>
+
+    <main class="contenedor-principal">
+        
+        <table class="tabla-clasificacion">
+            <thead>
+                <tr>
+                    <th class="metric-header">RANK</th>
+                    <th>JUGADOR</th>
+                    <th>EQUIPO</th>
+                    <th>PARTIDOS JUGADOS</th>
+                    <th>ASISTENCIAS</th>
+                    <th class="metric-header">GOLES</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="top-rank">
+                    <td class="rank-number">1</td>
+                    <td class="equipo-nombre">Roberto "El Crack" Pérez</td>
+                    <td>The Champions FC</td>
+                    <td>10</td>
+                    <td>5</td>
+                    <td class="puntos-valor lider">18</td>
+                </tr>
+                <tr class="top-rank">
+                    <td class="rank-number">2</td>
+                    <td class="equipo-nombre">Javier Gutiérrez</td>
+                    <td>Deportivo Fénix</td>
+                    <td>10</td>
+                    <td>3</td>
+                    <td class="puntos-valor clasifica">15</td>
+                </tr>
+                <tr class="top-rank">
+                    <td class="rank-number">3</td>
+                    <td class="equipo-nombre">Miguel Flores</td>
+                    <td>Los Halcones</td>
+                    <td>9</td>
+                    <td>8</td>
+                    <td class="puntos-valor">14</td>
+                </tr>
+                <tr>
+                    <td class="rank-number">4</td>
+                    <td class="equipo-nombre">Luis Mendoza</td>
+                    <td>Club Atlético Rayo</td>
+                    <td>10</td>
+                    <td>2</td>
+                    <td class="puntos-valor">11</td>
+                </tr>
+                 <tr>
+                    <td class="rank-number">5</td>
+                    <td class="equipo-nombre">Pedro Ramírez</td>
+                    <td>Estrella del Sur</td>
+                    <td>8</td>
+                    <td>4</td>
+                    <td class="puntos-valor">9</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </main>
+</body>
+</html

@@ -1,0 +1,154 @@
+/* --- estilos_clasificacion.css --- */
+
+/* Variables y Estilos Base */
+:root {
+    --color-fondo: #121212; 
+    --color-acento: #00bcd4; /* Cian Vibrante */
+    --color-texto-claro: #f0f0f0; 
+    --color-tarjeta: #1e1e1e; 
+    --color-header-tabla: #2a2a2a; 
+    --color-destacado: #38761d; /* Verde oscuro para lider/clasificación */
+    --color-peligro: #cc0000; /* Rojo para descenso */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-texto-claro);
+    background-color: var(--color-fondo);
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.header {
+    text-align: center;
+    padding: 30px 0 40px;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-acento);
+    letter-spacing: 1px;
+}
+
+/* Contenedor y Tabla */
+.contenedor-principal {
+    max-width: 1100px;
+    margin: 0 auto;
+    background-color: var(--color-tarjeta);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Sombra elevada */
+}
+
+.tabla-clasificacion {
+    width: 100%;
+    border-collapse: separate; /* Permite bordes redondeados en las filas */
+    border-spacing: 0;
+    font-size: 0.95rem;
+}
+
+/* Encabezados de la Tabla (THEAD) */
+.tabla-clasificacion thead th {
+    background-color: var(--color-header-tabla);
+    color: #a0a0a0;
+    padding: 15px 10px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid var(--color-acento);
+}
+
+.tabla-clasificacion thead th:first-child {
+    border-top-left-radius: 10px;
+}
+.tabla-clasificacion thead th:last-child {
+    border-top-right-radius: 10px;
+}
+
+/* Cuerpo de la Tabla (TBODY) */
+.tabla-clasificacion tbody tr {
+    background-color: var(--color-tarjeta);
+    transition: background-color 0.3s, transform 0.3s;
+    border-bottom: 1px solid #2a2a2a; /* Separador sutil */
+}
+
+.tabla-clasificacion tbody tr:hover {
+    background-color: #2a2a2a; /* Resaltar al pasar el ratón */
+    transform: scale(1.005);
+}
+
+.tabla-clasificacion tbody td {
+    padding: 12px 10px;
+    text-align: center;
+}
+
+/* ------------------------------------- */
+/* ESTILOS CREATIVOS Y DESTACADOS */
+/* ------------------------------------- */
+
+/* Columna de POSICIÓN */
+.posicion {
+    font-weight: 700;
+    color: #888;
+}
+
+.equipo-nombre {
+    text-align: left !important;
+    font-weight: 600;
+    color: var(--color-texto-claro);
+}
+
+/* Columna de PUNTOS (Énfasis) */
+.puntos {
+    color: var(--color-acento) !important;
+}
+
+.puntos-valor {
+    font-weight: 700;
+    font-size: 1.1rem;
+    background-color: #2a2a2a; /* Fondo para los puntos */
+}
+
+/* RESALTAR FILAS SEGÚN POSICIÓN */
+
+/* LÍDER */
+.tabla-clasificacion tr .lider {
+    color: var(--color-acento);
+    /* Efecto Neón Suave */
+    text-shadow: 0 0 5px rgba(0, 188, 212, 0.7); 
+}
+
+/* ZONA DE CLASIFICACIÓN (Ej. Top 4) */
+.tabla-clasificacion tr .clasifica {
+    color: #4CAF50; /* Verde de clasificación */
+}
+
+/* ZONA DE DESCENSO/PELIGRO (Ej. Últimos) */
+.tabla-clasificacion tr .descenso {
+    color: var(--color-peligro); /* Rojo */
+    background-color: #311d1d !important;
+}
+
+/* Media Query para tablas en Móviles */
+@media (max-width: 700px) {
+    /* Ocultar columnas menos importantes en móvil */
+    .tabla-clasificacion thead th:nth-child(5),
+    .tabla-clasificacion tbody td:nth-child(5), /* PE */
+    .tabla-clasificacion thead th:nth-child(6),
+    .tabla-clasificacion tbody td:nth-child(6), /* PP */
+    .tabla-clasificacion thead th:nth-child(7),
+    .tabla-clasificacion tbody td:nth-child(7), /* GF */
+    .tabla-clasificacion thead th:nth-child(8),
+    .tabla-clasificacion tbody td:nth-child(8) /* GC */
+    {
+        display: none;
+    }
+
+    .tabla-clasificacion thead th, 
+    .tabla-clasificacion tbody td {
+        padding: 8px 5px; /* Menos padding */
+        font-size: 0.8rem;
+    }
+}
