@@ -3,83 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clasificación del Torneo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Cuadro Final | Eliminación Directa</title>
     <link rel="stylesheet" href="tablaClasificatoria.css"> 
 </head>
-<body>
-    <header class="header">
-        <h1>TABLA DE CLASIFICACIÓN | TORNEO APERTURA 2025</h1>
-    </header>
+<body class="dark-background">
 
-    <main class="contenedor-principal">
-        
-        <table class="tabla-clasificacion">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>EQUIPO</th>
-                    <th>PJ</th>
-                    <th>PG</th>
-                    <th>PE</th>
-                    <th>PP</th>
-                    <th>GF</th>
-                    <th>GC</th>
-                    <th>DIF</th>
-                    <th class="puntos">PUNTOS</th> </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="posicion lider">1</td>
-                    <td class="equipo-nombre">OLIMPIA</td>
-                    <td>10</td>
-                    <td>9</td>
-                    <td>1</td>
-                    <td>0</td>
-                    <td>35</td>
-                    <td>5</td>
-                    <td>+30</td>
-                    <td class="puntos-valor lider">28</td>
-                </tr>
-                <tr>
-                    <td class="posicion clasifica">2</td>
-                    <td class="equipo-nombre">CERRO</td>
-                    <td>10</td>
-                    <td>7</td>
-                    <td>2</td>
-                    <td>1</td>
-                    <td>21</td>
-                    <td>8</td>
-                    <td>+13</td>
-                    <td class="puntos-valor clasifica">23</td>
-                </tr>
-                <tr>
-                    <td class="posicion">3</td>
-                    <td class="equipo-nombre">SAN LORENZO</td>
-                    <td>10</td>
-                    <td>5</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>15</td>
-                    <td>10</td>
-                    <td>+5</td>
-                    <td class="puntos-valor">18</td>
-                </tr>
-                <tr>
-                    <td class="posicion descenso">10</td>
-                    <td class="equipo-nombre">NANIX FC</td>
-                    <td>10</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>10</td>
-                    <td>2</td>
-                    <td>40</td>
-                    <td>-38</td>
-                    <td class="puntos-valor descenso">0</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="bracket-container">
+        <h2 class="bracket-title">Fase Final | Eliminación Directa</h2>
 
-    </main>
+        <div class="bracket-rounds">
+
+            <div class="round octavos-final">
+                <h3 class="round-title">Octavos de Final</h3>
+                <div class="match-up match-octavos" data-match-id="O1">
+                    <div class="team-slot team-top winner"><span class="team-name">URU</span><span class="score">2</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">KOR</span><span class="score">1</span></div>
+                    <div class="match-info">2:1 (1:0)</div>
+                </div>
+                <div class="match-up match-octavos" data-match-id="O2">
+                    <div class="team-slot team-top"><span class="team-name">USA</span><span class="score">1</span></div>
+                    <div class="team-slot team-bottom winner"><span class="team-name">GHA</span><span class="score">2</span></div>
+                    <div class="match-info">1:2 a.e.t.</div>
+                </div>
+                <div class="match-up match-octavos" data-match-id="O3">
+                    <div class="team-slot team-top winner"><span class="team-name">NED</span><span class="score">2</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">SVK</span><span class="score">1</span></div>
+                    <div class="match-info">2:1 (1:0)</div>
+                </div>
+                <div class="match-up match-octavos" data-match-id="O4">
+                    <div class="team-slot team-top winner"><span class="team-name">BRA</span><span class="score">3</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">CHI</span><span class="score">0</span></div>
+                    <div class="match-info">3:0 (2:0)</div>
+                </div>
+            </div>
+
+            <div class="round cuartos-final-left">
+                <h3 class="round-title">Cuartos de Final</h3>
+                <div class="match-up match-cuartos" data-match-id="C1">
+                    <div class="team-slot team-top winner"><span class="team-name">URU</span><span class="score">1</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">GHA</span><span class="score">1</span></div>
+                    <div class="match-info">5:3 PSO</div>
+                </div>
+                <div class="match-up match-cuartos" data-match-id="C2">
+                    <div class="team-slot team-top winner"><span class="team-name">NED</span><span class="score">2</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">BRA</span><span class="score">1</span></div>
+                    <div class="match-info">2:1 (0:1)</div>
+                </div>
+            </div>
+
+            <div class="round semifinal-left">
+                <h3 class="round-title">Semifinales</h3>
+                <div class="match-up match-semifinal" data-match-id="S1">
+                    <div class="team-slot team-top"><span class="team-name">URU</span><span class="score">2</span></div>
+                    <div class="team-slot team-bottom winner"><span class="team-name">NED</span><span class="score">3</span></div>
+                    <div class="match-info">2:3 (1:1)</div>
+                </div>
+            </div>
+
+            <div class="round final-center">
+                <h3 class="round-title">Final</h3>
+                <div class="match-up match-final" data-match-id="F1">
+                    <div class="team-slot team-top"><span class="team-name">NED</span><span class="score">0</span></div>
+                    <div class="team-slot team-bottom winner"><span class="team-name">ESP</span><span class="score">1</span></div>
+                    <div class="match-info">0:1 a.e.t.</div>
+                </div>
+                
+                <h3 class="round-title third-place-title">Tercer Puesto</h3>
+                <div class="match-up match-3rd-place" data-match-id="L1">
+                    <div class="team-slot team-top winner"><span class="team-name">URU</span><span class="score">2</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">GER</span><span class="score">3</span></div>
+                    <div class="match-info">2:3 (1:1)</div>
+                </div>
+            </div>
+
+            <div class="round semifinal-right">
+                <h3 class="round-title">Semifinales</h3>
+                <div class="match-up match-semifinal" data-match-id="S2">
+                    <div class="team-slot team-top winner"><span class="team-name">GER</span><span class="score">0</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">ESP</span><span class="score">1</span></div>
+                    <div class="match-info">0:1 (0:0)</div>
+                </div>
+            </div>
+
+            <div class="round cuartos-final-right">
+                <h3 class="round-title">Cuartos de Final</h3>
+                <div class="match-up match-cuartos" data-match-id="C3">
+                    <div class="team-slot team-top winner"><span class="team-name">ARG</span><span class="score">0</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">GER</span><span class="score">4</span></div>
+                    <div class="match-info">0:4 (0:1)</div>
+                </div>
+                <div class="match-up match-cuartos" data-match-id="C4">
+                    <div class="team-slot team-top winner"><span class="team-name">PAR</span><span class="score">0</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">ESP</span><span class="score">1</span></div>
+                    <div class="match-info">0:1 (0:0)</div>
+                </div>
+            </div>
+
+            <div class="round octavos-final">
+                <h3 class="round-title">Octavos de Final</h3>
+                <div class="match-up match-octavos" data-match-id="O5">
+                    <div class="team-slot team-top winner"><span class="team-name">ARG</span><span class="score">3</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">MEX</span><span class="score">1</span></div>
+                    <div class="match-info">3:1 (2:0)</div>
+                </div>
+                <div class="match-up match-octavos" data-match-id="O6">
+                    <div class="team-slot team-top winner"><span class="team-name">GER</span><span class="score">4</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">ENG</span><span class="score">1</span></div>
+                    <div class="match-info">4:1 (2:1)</div>
+                </div>
+                <div class="match-up match-octavos" data-match-id="O7">
+                    <div class="team-slot team-top winner"><span class="team-name">PAR</span><span class="score">0</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">JPN</span><span class="score">0</span></div>
+                    <div class="match-info">5:3 PSO</div>
+                </div>
+                <div class="match-up match-octavos" data-match-id="O8">
+                    <div class="team-slot team-top winner"><span class="team-name">ESP</span><span class="score">1</span></div>
+                    <div class="team-slot team-bottom"><span class="team-name">POR</span><span class="score">0</span></div>
+                    <div class="match-info">1:0 (0:0)</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 </html>

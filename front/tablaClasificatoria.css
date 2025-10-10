@@ -1,154 +1,227 @@
-/* --- estilos_clasificacion.css --- */
-
-/* Variables y Estilos Base */
 :root {
-    --color-fondo: #121212; 
-    --color-acento: #00bcd4; /* Cian Vibrante */
-    --color-texto-claro: #f0f0f0; 
-    --color-tarjeta: #1e1e1e; 
-    --color-header-tabla: #2a2a2a; 
-    --color-destacado: #38761d; /* Verde oscuro para lider/clasificación */
-    --color-peligro: #cc0000; /* Rojo para descenso */
+    --primary-color: #00bcd4;
+    --dark-background: #121212;
+    --match-bg: #282828;
+    --line-color: #444;
+    --line-thickness: 2px;
+    --team-text: #fff;
+    --score-text: var(--primary-color);
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    color: var(--color-texto-claro);
-    background-color: var(--color-fondo);
+/* Estilos base */
+body.dark-background {
+    background-color: var(--dark-background);
+    color: var(--team-text);
+    font-family: Arial, sans-serif;
     padding: 20px;
-    line-height: 1.6;
+    margin: 0;
 }
 
-.header {
-    text-align: center;
-    padding: 30px 0 40px;
-}
-
-.header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--color-acento);
-    letter-spacing: 1px;
-}
-
-/* Contenedor y Tabla */
-.contenedor-principal {
-    max-width: 1100px;
+.bracket-container {
+    max-width: 1400px;
     margin: 0 auto;
-    background-color: var(--color-tarjeta);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Sombra elevada */
+    padding: 20px 0;
 }
 
-.tabla-clasificacion {
-    width: 100%;
-    border-collapse: separate; /* Permite bordes redondeados en las filas */
-    border-spacing: 0;
-    font-size: 0.95rem;
-}
-
-/* Encabezados de la Tabla (THEAD) */
-.tabla-clasificacion thead th {
-    background-color: var(--color-header-tabla);
-    color: #a0a0a0;
-    padding: 15px 10px;
+.bracket-title {
     text-align: center;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    border-bottom: 3px solid var(--color-acento);
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-size: 2em;
 }
 
-.tabla-clasificacion thead th:first-child {
-    border-top-left-radius: 10px;
-}
-.tabla-clasificacion thead th:last-child {
-    border-top-right-radius: 10px;
-}
-
-/* Cuerpo de la Tabla (TBODY) */
-.tabla-clasificacion tbody tr {
-    background-color: var(--color-tarjeta);
-    transition: background-color 0.3s, transform 0.3s;
-    border-bottom: 1px solid #2a2a2a; /* Separador sutil */
+.bracket-rounds {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Asegura que todas las columnas empiecen arriba */
 }
 
-.tabla-clasificacion tbody tr:hover {
-    background-color: #2a2a2a; /* Resaltar al pasar el ratón */
-    transform: scale(1.005);
+/* Estilos de Ronda */
+.round {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
 }
 
-.tabla-clasificacion tbody td {
-    padding: 12px 10px;
+.round-title {
+    font-size: 1.1em;
+    color: #aaa;
+    margin-bottom: 20px;
     text-align: center;
 }
 
 /* ------------------------------------- */
-/* ESTILOS CREATIVOS Y DESTACADOS */
+/* ESTILOS DEL PARTIDO (MATCH-UP) */
+/* ------------------------------------- */
+.match-up {
+    width: 160px; /* Ancho fijo para consistencia */
+    margin-bottom: 30px; /* Espacio entre partidos */
+    position: relative; /* Clave para posicionar las líneas */
+    background: var(--match-bg);
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.team-slot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 8px;
+    border-bottom: 1px solid #333;
+}
+.team-slot:last-child {
+    border-bottom: none;
+}
+.team-slot.winner .team-name {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+.score {
+    font-weight: bold;
+    color: var(--score-text);
+}
+.match-info {
+    font-size: 0.7em;
+    color: #999;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+/* ------------------------------------- */
+/* CONFIGURACIÓN DE COLUMNAS (ALINEACIÓN VERTICAL) */
 /* ------------------------------------- */
 
-/* Columna de POSICIÓN */
-.posicion {
-    font-weight: 700;
-    color: #888;
+/* Los octavos son la base, cuartos van en el medio, y semifinal en el centro */
+.cuartos-final-left, .cuartos-final-right {
+    margin-top: 50px; 
+}
+.semifinal-left, .semifinal-right {
+    margin-top: 150px; 
+}
+.final-center {
+    margin-top: 250px; 
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.third-place-title {
+    margin-top: 100px;
+    margin-bottom: 10px;
+    color: #cc0000; /* Color para el partido del 3er puesto */
 }
 
-.equipo-nombre {
-    text-align: left !important;
-    font-weight: 600;
-    color: var(--color-texto-claro);
+
+/* ------------------------------------- */
+/* LÍNEAS DE CONEXIÓN (La magia del Bracket) */
+/* ------------------------------------- */
+
+/* --- LADO IZQUIERDO --- */
+
+/* Línea de inicio (horizontal) desde octavos a cuartos */
+.round.octavos-final .match-up:after, 
+.round.cuartos-final-left .match-up:after, 
+.round.semifinal-left .match-up:after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: var(--line-thickness);
+    background: var(--line-color);
+    right: -10px;
+    top: 50%;
+    z-index: 1;
 }
 
-/* Columna de PUNTOS (Énfasis) */
-.puntos {
-    color: var(--color-acento) !important;
+/* Línea vertical de conexión entre partidos */
+/* Octavos (distancia corta) */
+.round.octavos-final .match-up:nth-child(2n):before {
+    content: '';
+    position: absolute;
+    height: calc(100% + 30px); /* 100% de la altura del match + su margin-bottom */
+    width: var(--line-thickness);
+    background: var(--line-color);
+    right: -10px;
+    top: -30px; /* Mueve la línea para que empiece en el partido anterior */
+    z-index: 0;
+}
+/* Cuartos (distancia media) */
+.round.cuartos-final-left .match-up:nth-child(2n):before {
+    content: '';
+    position: absolute;
+    height: calc(100% + 110px); 
+    width: var(--line-thickness);
+    background: var(--line-color);
+    right: -10px;
+    top: -110px;
+    z-index: 0;
+}
+/* Semifinal (Línea al centro/Final) */
+.round.semifinal-left .match-up:after {
+    width: 20px; /* Línea más larga hacia el centro */
+    right: -20px;
 }
 
-.puntos-valor {
-    font-weight: 700;
-    font-size: 1.1rem;
-    background-color: #2a2a2a; /* Fondo para los puntos */
+/* --- LADO DERECHO (Espejo) --- */
+
+/* Línea de inicio (horizontal) desde octavos a cuartos */
+.round.octavos-final .match-up:nth-child(n+5):after, 
+.round.cuartos-final-right .match-up:after, 
+.round.semifinal-right .match-up:after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: var(--line-thickness);
+    background: var(--line-color);
+    left: -10px; /* Cambia a left para el lado derecho */
+    top: 50%;
+    z-index: 1;
 }
 
-/* RESALTAR FILAS SEGÚN POSICIÓN */
-
-/* LÍDER */
-.tabla-clasificacion tr .lider {
-    color: var(--color-acento);
-    /* Efecto Neón Suave */
-    text-shadow: 0 0 5px rgba(0, 188, 212, 0.7); 
+/* Línea vertical de conexión entre partidos */
+/* Octavos (distancia corta) */
+.round.octavos-final .match-up:nth-child(2n+5):before {
+    content: '';
+    position: absolute;
+    height: calc(100% + 30px);
+    width: var(--line-thickness);
+    background: var(--line-color);
+    left: -10px; /* Cambia a left */
+    top: -30px; 
+    z-index: 0;
+}
+/* Cuartos (distancia media) */
+.round.cuartos-final-right .match-up:nth-child(2n):before {
+    content: '';
+    position: absolute;
+    height: calc(100% + 110px); 
+    width: var(--line-thickness);
+    background: var(--line-color);
+    left: -10px;
+    top: -110px;
+    z-index: 0;
+}
+/* Semifinal (Línea al centro/Final) */
+.round.semifinal-right .match-up:after {
+    width: 20px; 
+    left: -20px;
 }
 
-/* ZONA DE CLASIFICACIÓN (Ej. Top 4) */
-.tabla-clasificacion tr .clasifica {
-    color: #4CAF50; /* Verde de clasificación */
+/* Conexión de la Final al Centro (Horizontal Grande) */
+.round.final-center .match-up:before {
+    content: '';
+    position: absolute;
+    width: 40px; /* Mismo que el margin */
+    height: var(--line-thickness);
+    background: var(--line-color);
+    left: -40px;
+    top: 50%;
+    z-index: 1;
 }
-
-/* ZONA DE DESCENSO/PELIGRO (Ej. Últimos) */
-.tabla-clasificacion tr .descenso {
-    color: var(--color-peligro); /* Rojo */
-    background-color: #311d1d !important;
-}
-
-/* Media Query para tablas en Móviles */
-@media (max-width: 700px) {
-    /* Ocultar columnas menos importantes en móvil */
-    .tabla-clasificacion thead th:nth-child(5),
-    .tabla-clasificacion tbody td:nth-child(5), /* PE */
-    .tabla-clasificacion thead th:nth-child(6),
-    .tabla-clasificacion tbody td:nth-child(6), /* PP */
-    .tabla-clasificacion thead th:nth-child(7),
-    .tabla-clasificacion tbody td:nth-child(7), /* GF */
-    .tabla-clasificacion thead th:nth-child(8),
-    .tabla-clasificacion tbody td:nth-child(8) /* GC */
-    {
-        display: none;
-    }
-
-    .tabla-clasificacion thead th, 
-    .tabla-clasificacion tbody td {
-        padding: 8px 5px; /* Menos padding */
-        font-size: 0.8rem;
-    }
+.round.final-center .match-up:after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: var(--line-thickness);
+    background: var(--line-color);
+    right: -40px;
+    top: 50%;
+    z-index: 1;
 }
