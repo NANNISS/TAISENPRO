@@ -1,11 +1,7 @@
 import LoginAdminCliente from './components/LoginAdminCliente';
 
 function App() {
-  return (
-    <div>
-      <LoginAdminCliente />
-    </div>
-  );
+  return <LoginAdminCliente />;
 }
 
 export default App;
