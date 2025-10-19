@@ -153,4 +153,6 @@ CREATE TABLE SANCIONES (
     monto_multa INTEGER DEFAULT 0,
     detalles_incidente TEXT,
     fecha_registro TIMESTAMP DEFAULT NOW()
+	
 );
+SELECT * FROM USERS WHERE user_name = 'admin';

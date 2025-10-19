@@ -82,7 +82,7 @@ const LoginAdminCliente = () => {
       }));
 
       setTimeout(() => {
-        alert('Redirigiendo a Dashboard Admin (próximamente)');
+      window.location.href = '/dashboard-admin';
       }, 1500);
 
     } catch (err) {
@@ -139,7 +139,7 @@ const LoginAdminCliente = () => {
       }));
 
       setTimeout(() => {
-        alert('Redirigiendo a Dashboard Admin (próximamente)');
+      window.location.href = '/dashboard-admin';
       }, 1500);
 
     } catch (err) {
