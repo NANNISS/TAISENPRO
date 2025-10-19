@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import LoginAdminCliente from './LoginAdminCliente';
+import LoginAdminCliente from './components/LoginAdminCliente';
 import DashboardAdminCliente from './components/DashboardAdminCliente';
 
 function App() {
