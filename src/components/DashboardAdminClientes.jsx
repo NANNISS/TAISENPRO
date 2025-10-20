@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Trophy, Users, Calendar, Plus, BarChart3, Settings, LogOut, Edit2, Trash2, Eye } from 'lucide-react';
 
-const DashboardAdminCliente = () => {
+const DashboardAdminClientes = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [torneos, setTorneos] = useState([]);
   const [stats, setStats] = useState({
@@ -261,4 +261,4 @@ const DashboardAdminCliente = () => {
   );
 };
 
-export default DashboardAdminCliente;
+export default DashboardAdminClientes;
