@@ -1,199 +1,236 @@
 import React, { useState } from 'react';
-import { Users, User, Mail, Phone, Upload, CheckCircle, Copy } from 'lucide-react';
+import { Trophy, User, Mail, Zap, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+
+// --- LÓGICA DE SERVICIO INCLUIDA EN ESTE ARCHIVO PARA EVITAR ERRORES DE RESOLUCIÓN ---
+
+const equipoService = {
+  /**
+   * Registra un nuevo equipo y retorna un código de invitación simulado.
+   * @param {object} datosEquipo - Contiene nombreEquipo, nombreCapitan, emailCapitan.
+   * @returns {Promise<object>} - Retorna { success, equipo, codigoInvitacion, warning }
+   */
+  registrarEquipo: async (datosEquipo) => {
+    // Simulamos la operación de registro sin intentar fetch para evitar errores de red.
+    return new Promise(resolve => {
+        setTimeout(() => {
+            // Simulación de generación de código único. Usamos ABCDEF para la prueba del registro de jugador.
+            const codigoInvitacion = 'ABCDEF'; 
+
+            resolve({
+                success: true, 
+                equipo: { ...datosEquipo, id: Date.now() },
+                codigoInvitacion: codigoInvitacion,
+                warning: 'Operación simulada: El backend no está conectado. El código de invitación es ABCDEF (cópialo para el registro de jugador).'
+            });
+        }, 1500);
+    });
+  },
+};
+// --- FIN LÓGICA DE SERVICIO ---
+
 
 const RegistroEquipo = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(1); // 1: Formulario, 2: Éxito
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     nombreEquipo: '',
-    logoEquipo: null,
     nombreCapitan: '',
     emailCapitan: '',
-    telefonoCapitan: ''
   });
-  const [codigoInvitacion, setCodigoInvitacion] = useState('');
+  const [resultadoRegistro, setResultadoRegistro] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Generar código único
-    const codigo = 'TEAM-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-    setCodigoInvitacion(codigo);
-    setStep(2);
-  };
+    setLoading(true);
+    setError('');
 
-  const copiarCodigo = () => {
-    navigator.clipboard.writeText(codigoInvitacion);
-    alert('¡Código copiado al portapapeles!');
-  };
+    if (!formData.nombreEquipo || !formData.nombreCapitan || !formData.emailCapitan) {
+      setError('Por favor, completa todos los campos.');
+      setLoading(false);
+      return;
+    }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 flex items-center justify-center">
-      <div className="w-full max-w-2xl">
-        
-        {step === 1 ? (
-          // Formulario de Registro
-          <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 shadow-2xl">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl mx-auto mb-4 flex items-center justify-center">
-                <Users className="w-8 h-8 text-white" />
-              </div>
-              <h1 className="text-3xl font-bold text-white mb-2">Registrar Mi Equipo</h1>
-              <p className="text-slate-400">Copa Apertura 2026 - Fútbol 7</p>
+    try {
+      const resultado = await equipoService.registrarEquipo(formData);
+
+      if (resultado.success) {
+        setResultadoRegistro(resultado);
+        setStep(2); // Pasar al paso de éxito
+      } else {
+        setError(resultado.error || 'No se pudo registrar el equipo.');
+      }
+    } catch (err) {
+        // En este entorno simulado, si hay un error aquí es un error lógico interno
+        setError(err.message || 'Ocurrió un error inesperado al simular el registro.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // VISTA DE ÉXITO (Paso 2)
+  if (step === 2 && resultadoRegistro) {
+    const copyToClipboard = () => {
+        // Usamos document.execCommand('copy') por restricciones del iFrame
+        const el = document.createElement('textarea');
+        el.value = resultadoRegistro.codigoInvitacion;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        // Usamos alert temporalmente, pero un modal personalizado es mejor en producción.
+        window.alert('Código de invitación copiado al portapapeles!');
+    };
+
+
+    return (
+      <div className="min-h-screen bg-slate-900 p-4 flex items-center justify-center font-sans">
+        <div className="w-full max-w-xl bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 shadow-2xl text-center">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 bg-green-500 rounded-full mx-auto mb-4 flex items-center justify-center animate-pulse">
+              <CheckCircle className="w-8 h-8 text-white" />
             </div>
+            <h1 className="text-3xl font-bold text-white mb-2">¡Equipo Registrado!</h1>
+            <p className="text-slate-400">**{resultadoRegistro.equipo.nombreEquipo}** está listo para el torneo.</p>
+          </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              
-              {/* Nombre del Equipo */}
-              <div>
-                <label className="block text-slate-300 text-sm font-semibold mb-2">
-                  Nombre del Equipo *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.nombreEquipo}
-                  onChange={(e) => setFormData({ ...formData, nombreEquipo: e.target.value })}
-                  placeholder="Ej: Los Invencibles FC"
-                  className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30"
-                />
+          <div className="bg-slate-700/30 rounded-xl p-6 mb-8">
+            <h3 className="text-xl font-bold text-white mb-4 border-b border-slate-600 pb-2">Código de Invitación</h3>
+            <p className="text-slate-300 mb-4">Usa este código para que tus jugadores se unan (cópialo para probar el Registro de Jugador):</p>
+            <div className="flex justify-center items-center space-x-3">
+                <span className="text-4xl font-mono font-extrabold tracking-widest bg-slate-900 text-yellow-400 p-3 rounded-lg shadow-inner">
+                    {resultadoRegistro.codigoInvitacion}
+                </span>
+                <button
+                    onClick={copyToClipboard}
+                    className="bg-cyan-600 hover:bg-cyan-700 text-white p-3 rounded-lg transition-colors text-sm font-semibold"
+                >
+                    Copiar
+                </button>
+            </div>
+            {resultadoRegistro.warning && (
+              <div className="mt-4 bg-yellow-500/10 border border-yellow-500/50 rounded-xl p-3 flex items-start gap-3">
+                <AlertCircle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+                <p className="text-yellow-300 text-xs text-left">{resultadoRegistro.warning}</p>
               </div>
+            )}
+          </div>
 
-              {/* Logo del Equipo */}
+          <button
+            onClick={() => setStep(1)}
+            className="w-full bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-4 rounded-xl transition-all"
+          >
+            Registrar Otro Equipo
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // VISTA DE REGISTRO (Paso 1)
+  return (
+    <div className="min-h-screen bg-slate-900 p-4 flex items-center justify-center font-sans">
+      <div className="w-full max-w-xl bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 shadow-2xl">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg">
+            <Trophy className="w-8 h-8 text-white" />
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-2">Registro de Nuevo Equipo</h1>
+          <p className="text-slate-400">Completa los datos del equipo y del capitán.</p>
+        </div>
+
+        {error && (
+          <div className="mb-6 bg-red-500/10 border border-red-500/50 rounded-xl p-4 flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+            <p className="text-red-300 text-sm font-medium">{error}</p>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          
+          {/* CAMPO NOMBRE DEL EQUIPO */}
+          <div>
+            <label htmlFor="nombreEquipo" className="block text-slate-300 text-sm font-semibold mb-2">Nombre del Equipo *</label>
+            <div className="relative">
+              <Zap className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
+              <input
+                id="nombreEquipo"
+                type="text"
+                name="nombreEquipo"
+                required
+                value={formData.nombreEquipo}
+                onChange={handleChange}
+                placeholder="Ej: Los Dragones FC"
+                className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-colors"
+              />
+            </div>
+          </div>
+          
+          {/* SECCIÓN DATOS DEL CAPITÁN */}
+          <div className="border-t border-slate-700 pt-6">
+            <h3 className="text-xl font-bold text-white mb-4">Datos del Capitán</h3>
+            
+            <div className="space-y-4">
               <div>
-                <label className="block text-slate-300 text-sm font-semibold mb-2">
-                  Logo del Equipo (Opcional)
-                </label>
-                <div className="border-2 border-dashed border-slate-600 rounded-lg p-6 text-center hover:border-cyan-500 transition-colors cursor-pointer">
-                  <Upload className="w-8 h-8 text-slate-500 mx-auto mb-2" />
-                  <p className="text-slate-400 text-sm">Click para subir o arrastra tu logo aquí</p>
-                  <p className="text-slate-500 text-xs mt-1">PNG, JPG hasta 5MB</p>
+                <label htmlFor="nombreCapitan" className="block text-slate-300 text-sm font-semibold mb-2">Tu Nombre Completo *</label>
+                <div className="relative">
+                  <User className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
                   <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setFormData({ ...formData, logoEquipo: e.target.files[0] })}
-                    className="hidden"
+                    id="nombreCapitan"
+                    type="text"
+                    name="nombreCapitan"
+                    required
+                    value={formData.nombreCapitan}
+                    onChange={handleChange}
+                    placeholder="Nombre y apellido del capitán"
+                    className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-colors"
                   />
                 </div>
               </div>
 
-              <div className="border-t border-slate-700 pt-6">
-                <h3 className="text-xl font-bold text-white mb-4">Datos del Capitán</h3>
-                
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-slate-300 text-sm font-semibold mb-2">
-                      Nombre Completo *
-                    </label>
-                    <div className="relative">
-                      <User className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
-                      <input
-                        type="text"
-                        required
-                        value={formData.nombreCapitan}
-                        onChange={(e) => setFormData({ ...formData, nombreCapitan: e.target.value })}
-                        placeholder="Ej: Juan Pérez"
-                        className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-slate-300 text-sm font-semibold mb-2">
-                      Email *
-                    </label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
-                      <input
-                        type="email"
-                        required
-                        value={formData.emailCapitan}
-                        onChange={(e) => setFormData({ ...formData, emailCapitan: e.target.value })}
-                        placeholder="tu@email.com"
-                        className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-slate-300 text-sm font-semibold mb-2">
-                      Teléfono *
-                    </label>
-                    <div className="relative">
-                      <Phone className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
-                      <input
-                        type="tel"
-                        required
-                        value={formData.telefonoCapitan}
-                        onChange={(e) => setFormData({ ...formData, telefonoCapitan: e.target.value })}
-                        placeholder="+595 981 234 567"
-                        className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30"
-                      />
-                    </div>
-                  </div>
+              <div>
+                <label htmlFor="emailCapitan" className="block text-slate-300 text-sm font-semibold mb-2">Tu Email *</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
+                  <input
+                    id="emailCapitan"
+                    type="email"
+                    name="emailCapitan"
+                    required
+                    value={formData.emailCapitan}
+                    onChange={handleChange}
+                    placeholder="email@delcapitan.com"
+                    className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-colors"
+                  />
                 </div>
               </div>
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-4 rounded-lg transition-all shadow-lg"
-              >
-                Registrar Equipo
-              </button>
-
-              <p className="text-center text-slate-400 text-sm">
-                Al registrarte aceptas los <a href="#" className="text-cyan-400 hover:underline">términos y condiciones</a> del torneo
-              </p>
-            </form>
-          </div>
-        ) : (
-          // Confirmación y Código de Invitación
-          <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 shadow-2xl">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-green-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <CheckCircle className="w-8 h-8 text-white" />
-              </div>
-              <h1 className="text-3xl font-bold text-white mb-2">¡Equipo Registrado!</h1>
-              <p className="text-slate-400">Tu equipo ha sido inscrito exitosamente</p>
-            </div>
-
-            <div className="bg-slate-700/30 rounded-xl p-6 mb-6">
-              <h3 className="text-lg font-bold text-white mb-4">Detalles del Equipo</h3>
-              <div className="space-y-2 text-slate-300">
-                <p><span className="text-slate-400">Nombre:</span> <span className="font-semibold">{formData.nombreEquipo}</span></p>
-                <p><span className="text-slate-400">Capitán:</span> <span className="font-semibold">{formData.nombreCapitan}</span></p>
-                <p><span className="text-slate-400">Email:</span> <span className="font-semibold">{formData.emailCapitan}</span></p>
-                <p><span className="text-slate-400">Teléfono:</span> <span className="font-semibold">{formData.telefonoCapitan}</span></p>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-xl p-6 mb-6">
-              <h3 className="text-lg font-bold text-white mb-4">Código de Invitación para Jugadores</h3>
-              <p className="text-slate-300 text-sm mb-4">
-                Comparte este código con tus jugadores para que se unan al equipo:
-              </p>
-              
-              <div className="flex gap-2">
-                <div className="flex-1 bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 font-mono text-xl text-cyan-400 font-bold text-center">
-                  {codigoInvitacion}
-                </div>
-                <button
-                  onClick={copiarCodigo}
-                  className="px-4 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg transition-all flex items-center gap-2"
-                >
-                  <Copy className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-3 rounded-lg transition-all">
-                Ir al Panel de Mi Equipo
-              </button>
-              <button className="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-lg transition-all">
-                Descargar Reglamento (PDF)
-              </button>
             </div>
           </div>
-        )}
+
+          {/* BOTÓN DE ENVÍO */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-orange-500 to-yellow-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg hover:from-orange-600 hover:to-yellow-700 transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Registrando...
+              </>
+            ) : (
+              'Registrar Equipo'
+            )}
+          </button>
+        </form>
       </div>
     </div>
   );
