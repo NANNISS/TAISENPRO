@@ -1,7 +1,9 @@
 import React from 'react';
 import { Trophy, Users, Calendar, Target, ArrowRight, CheckCircle, Zap, Shield, Award } from 'lucide-react';
+import { useNavigate} from 'react-router-dom';
 
 const LandingPrincipal = () => {
+  const navigate = useNavigate();
   const deportes = [
     {
       id: 1,
@@ -104,7 +106,7 @@ const LandingPrincipal = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       
       {/* Hero Section */}
       <div className="relative overflow-hidden">
