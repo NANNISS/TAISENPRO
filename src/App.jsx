@@ -1,8 +1,18 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginAdminCliente from './components/LoginAdminCliente';
 import DashboardAdminClientes from "./components/DashboardAdminClientes";
+import CrearTorneoWizard from './components/CrearTorneoWizard';
+import LandingTorneo from  './components/LandingTorneo';
 import RegistroEquipo from './components/RegistroEquipo';
+import RegistroJugadores from './components/RegistroJugadores';
+import ListaEquipos from './components/ListaEquipos';
+import MarcadorEnVivo from './components/MarcadorEnVivo';
+import MarcadorPublico from './components/MarcadorPublico';
 
+// Admin
+import LoginAdmin from './components/LoginAdminCliente';
+import DashboardAdminClientes from './components/DashboardAdminClientes';
+import CrearTorneoWizard from './components/CrearTorneoWizard';
 // Jugador
 import PerfilJugador from './components/PerfilJugador';
 import DashboardJugador from './components/DashboardJugador';
@@ -28,12 +38,15 @@ function App() {
       <Routes>
         {/* Público */}
         <Route path="/" element={<LandingPrincipal />} />
+        <Route path="/torneo/:id" element={<LandingTorneo />} />
         <Route path="/eliminatorias" element={<CuadroEliminatorias />} />
         <Route path="/tabla-clasificacion" element={<TablaClasificacion />} />
         
         {/* Admin */}
         <Route path="/login-admin" element={<LoginAdminCliente />} />
         <Route path="/dashboard-admin" element={<DashboardAdminClientes />} />
+        <Route path="/crear-torneo" element={<CrearTorneoWizard />} />
+        
         
         {/* Equipos */}
         <Route path="/registro-equipo" element={<RegistroEquipo />} />
@@ -42,6 +55,8 @@ function App() {
         <Route path="/perfil-jugador" element={<PerfilJugador />} />
         <Route path="/dashboard-jugador" element={<DashboardJugador />} />
         <Route path="/mi-equipo" element={<MiEquipo />} />
+        <Route path="/registro-jugador" element={<RegistroJugadores />} />
+        <Route path="/lista-equipos" element={<ListaEquipos />} />
         
         {/* Árbitro */}
         <Route path="/login-arbitro" element={<LoginArbitro />} />

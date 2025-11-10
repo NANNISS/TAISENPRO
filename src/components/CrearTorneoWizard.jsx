@@ -1,27 +1,41 @@
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Check, Trophy, Users, Layout, Clock, CheckCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight, Check, Trophy, Users, Layout, Clock, CheckCircle, Save, Loader, AlertTriangle, User } from 'lucide-react';
+
+// --- FIREBASE IMPORTS ---
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, doc, addDoc, collection } from 'firebase/firestore';
+
+// --- Global Variables (Provided by Canvas Environment) ---
+const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+// ---------------------------------------------------------
 
 const CrearTorneoWizard = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    // Paso 1: Info General
     nombre: '',
     fechaInicio: '',
     fechaFin: '',
-    
-    // Paso 2: Modalidad
     modalidad: '',
     maxEquipos: 16,
-    
-    // Paso 3: Formato
     formato: '',
     equiposPorGrupo: 4,
-    
-    // Paso 4: Reglas
     duracionPartido: 60,
     jugadoresPorEquipo: { min: 7, max: 14 },
     reglasDesempate: 'penales'
   });
+
+  // FIREBASE STATE
+  const [db, setDb] = useState(null);
+  const [auth, setAuth] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [isAuthReady, setIsAuthReady] = useState(false);
+
+  // UI STATE
+  const [isSaving, setIsSaving] = useState(false);
+  const [message, setMessage] = useState(null); // { type: 'success' | 'error', text: '...' }
 
   const totalSteps = 5;
 
@@ -30,6 +44,41 @@ const CrearTorneoWizard = () => {
     'F7': { nombre: 'Fútbol 7', jugadores: { min: 7, max: 14 }, duracion: 60 },
     'F11': { nombre: 'Fútbol 11', jugadores: { min: 11, max: 23 }, duracion: 90 }
   };
+
+  // --- 1. FIREBASE INITIALIZATION AND AUTHENTICATION ---
+  useEffect(() => {
+    if (Object.keys(firebaseConfig).length === 0) return;
+
+    try {
+      const app = initializeApp(firebaseConfig);
+      const firestore = getFirestore(app);
+      const firebaseAuth = getAuth(app);
+      setDb(firestore);
+      setAuth(firebaseAuth);
+
+      const unsubscribe = onAuthStateChanged(firebaseAuth, async (user) => {
+        if (user) {
+          setUserId(user.uid);
+          setIsAuthReady(true);
+        } else {
+          // If no user, sign in using the provided token or anonymously
+          if (initialAuthToken) {
+            await signInWithCustomToken(firebaseAuth, initialAuthToken);
+          } else {
+            await signInAnonymously(firebaseAuth);
+          }
+          // The onAuthStateChanged listener will fire again with the new user.
+        }
+      });
+      return () => unsubscribe();
+    } catch (error) {
+      console.error("Firebase initialization or authentication error:", error);
+      setMessage({ type: 'error', text: 'Error al inicializar la autenticación.' });
+      setIsAuthReady(true); // Stop blocking even if failed
+    }
+  }, []);
+  // ---------------------------------------------------
+
 
   const handleModalidadChange = (mod) => {
     const config = modalidades[mod];
@@ -42,17 +91,65 @@ const CrearTorneoWizard = () => {
   };
 
   const handleNext = () => {
+    // Basic validation before moving to the next step
+    if (currentStep === 1 && (!formData.nombre || !formData.fechaInicio || !formData.fechaFin)) {
+      setMessage({ type: 'error', text: 'Por favor, completa todos los campos requeridos en esta sección.' });
+      return;
+    }
+    if (currentStep === 2 && !formData.modalidad) {
+      setMessage({ type: 'error', text: 'Por favor, selecciona una Modalidad.' });
+      return;
+    }
+    if (currentStep === 3 && !formData.formato) {
+      setMessage({ type: 'error', text: 'Por favor, selecciona un Formato de Clasificación.' });
+      return;
+    }
+
+    setMessage(null);
     if (currentStep < totalSteps) setCurrentStep(currentStep + 1);
   };
 
   const handleBack = () => {
+    setMessage(null);
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
-  const handleSubmit = () => {
-    console.log('Datos del torneo:', formData);
-    alert('¡Torneo creado exitosamente! (Datos guardados en consola)');
+  // --- 2. FIREBASE SUBMISSION LOGIC ---
+  const handleSubmit = async () => {
+    if (!isAuthReady || !db || !userId) {
+      setMessage({ type: 'error', text: 'El sistema no está listo para guardar. Intenta de nuevo.' });
+      return;
+    }
+
+    setIsSaving(true);
+    setMessage(null);
+    
+    // Path: /artifacts/{appId}/users/{userId}/tournaments
+    const collectionPath = `artifacts/${appId}/users/${userId}/tournaments`;
+
+    try {
+      const docRef = await addDoc(collection(db, collectionPath), {
+        ...formData,
+        createdAt: new Date(),
+        createdBy: userId,
+      });
+
+      console.log('Torneo creado exitosamente con ID:', docRef.id);
+      setMessage({ type: 'success', text: '¡Torneo creado exitosamente! Ya puedes gestionarlo.' });
+      
+      // Reset form or navigate, but for now, just show success message
+      setFormData({
+        nombre: '', fechaInicio: '', fechaFin: '', modalidad: '', maxEquipos: 16, formato: '', equiposPorGrupo: 4, duracionPartido: 60, jugadoresPorEquipo: { min: 7, max: 14 }, reglasDesempate: 'penales'
+      });
+      setCurrentStep(1); // Go back to step 1
+    } catch (error) {
+      console.error('Error al crear el torneo en Firestore:', error);
+      setMessage({ type: 'error', text: 'Error al guardar el torneo. Revisa la consola para más detalles.' });
+    } finally {
+      setIsSaving(false);
+    }
   };
+  // -----------------------------------
 
   const steps = [
     { number: 1, title: 'Info General', icon: Trophy },
@@ -62,14 +159,42 @@ const CrearTorneoWizard = () => {
     { number: 5, title: 'Confirmar', icon: CheckCircle }
   ];
 
+  if (!isAuthReady) {
+    return (
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+        <div className="flex items-center text-white">
+          <Loader className="w-6 h-6 animate-spin mr-3" />
+          Cargando configuración...
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 font-inter">
       <div className="max-w-4xl mx-auto py-8">
         
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Crear Nuevo Torneo</h1>
           <p className="text-slate-400">Configura tu torneo paso a paso</p>
+        </div>
+
+        {/* User Info and Status */}
+        <div className="flex justify-between items-center mb-6 p-3 bg-slate-700/50 rounded-lg border border-slate-700">
+            <div className="flex items-center text-sm text-slate-300">
+                <User className="w-4 h-4 mr-2 text-cyan-400" />
+                ID de Administrador: 
+                <span className="ml-2 font-mono text-xs text-white bg-slate-800 p-1 rounded">
+                    {userId || 'Error de autenticación'}
+                </span>
+            </div>
+            {isSaving && (
+                <div className="flex items-center text-sm text-cyan-400">
+                    <Loader className="w-4 h-4 animate-spin mr-2" />
+                    Guardando...
+                </div>
+            )}
         </div>
 
         {/* Progress Steps */}
@@ -108,6 +233,16 @@ const CrearTorneoWizard = () => {
             ))}
           </div>
         </div>
+
+        {/* Message Box */}
+        {message && (
+          <div className={`mb-6 p-4 rounded-lg flex items-center gap-3 ${
+            message.type === 'success' ? 'bg-green-500/10 border border-green-500/50 text-green-300' : 'bg-red-500/10 border border-red-500/50 text-red-300'
+          }`}>
+            {message.type === 'success' ? <CheckCircle className="w-5 h-5 flex-shrink-0" /> : <AlertTriangle className="w-5 h-5 flex-shrink-0" />}
+            <p className="font-medium text-sm">{message.text}</p>
+          </div>
+        )}
 
         {/* Form Card */}
         <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 shadow-2xl">
@@ -402,7 +537,7 @@ const CrearTorneoWizard = () => {
           <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-700">
             <button
               onClick={handleBack}
-              disabled={currentStep === 1}
+              disabled={currentStep === 1 || isSaving}
               className="flex items-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-600 disabled:bg-slate-800 disabled:text-slate-600 text-white rounded-lg font-semibold transition-all disabled:cursor-not-allowed"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -412,7 +547,8 @@ const CrearTorneoWizard = () => {
             {currentStep < totalSteps ? (
               <button
                 onClick={handleNext}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-lg font-semibold transition-all shadow-lg shadow-cyan-500/50"
+                disabled={isSaving}
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-lg font-semibold transition-all shadow-lg shadow-cyan-500/50 disabled:opacity-50"
               >
                 Siguiente
                 <ChevronRight className="w-5 h-5" />
@@ -420,10 +556,20 @@ const CrearTorneoWizard = () => {
             ) : (
               <button
                 onClick={handleSubmit}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-lg font-semibold transition-all shadow-lg shadow-green-500/50"
+                disabled={isSaving || !formData.nombre || !formData.modalidad || !formData.formato} // Disable if critical fields are missing or saving
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-lg font-semibold transition-all shadow-lg shadow-green-500/50 disabled:opacity-50 disabled:bg-slate-700"
               >
-                <Check className="w-5 h-5" />
-                Crear Torneo
+                {isSaving ? (
+                    <>
+                        <Loader className="w-5 h-5 animate-spin" />
+                        Guardando...
+                    </>
+                ) : (
+                    <>
+                        <Save className="w-5 h-5" />
+                        Crear Torneo
+                    </>
+                )}
               </button>
             )}
           </div>

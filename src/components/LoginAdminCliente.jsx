@@ -15,7 +15,8 @@ const LoginAdminCliente = () => {
     passwordConfirm: ''
   });
 
-  const API_URL = 'http://localhost:3001';
+  // ¡IMPORTANTE! Asegúrate de que esta URL sea accesible desde tu entorno de React
+  const API_URL = 'http://localhost:3001'; 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,31 +25,42 @@ const LoginAdminCliente = () => {
   };
 
   const validateForm = () => {
+    // Validación básica: Usuario y Contraseña siempre requeridos
     if (!formData.username || !formData.password) {
       setError('Por favor completa todos los campos');
       return false;
     }
 
-    if (!isLogin && !formData.email) {
-      setError('El email es obligatorio para registrarse');
-      return false;
-    }
-
-    if (!isLogin && formData.password !== formData.passwordConfirm) {
-      setError('Las contraseñas no coinciden');
-      return false;
-    }
-
-    if (!isLogin && formData.password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres');
-      return false;
+    if (!isLogin) {
+      // Validaciones adicionales para el registro
+      if (!formData.email) {
+        setError('El email es obligatorio para registrarse');
+        return false;
+      }
+      if (formData.password !== formData.passwordConfirm) {
+        setError('Las contraseñas no coinciden');
+        return false;
+      }
+      if (formData.password.length < 6) {
+        setError('La contraseña debe tener al menos 6 caracteres');
+        return false;
+      }
     }
 
     return true;
   };
 
+  const handleAuth = (e) => {
+    // Si manejas el formulario con <form onSubmit={handleAuth}>, 'e' es el evento de submit
+    e.preventDefault(); 
+    if (isLogin) {
+      handleLogin(e);
+    } else {
+      handleRegister(e);
+    }
+  }
+
   const handleLogin = async (e) => {
-    e.preventDefault();
     if (!validateForm()) return;
 
     setLoading(true);
@@ -57,23 +69,22 @@ const LoginAdminCliente = () => {
 
     try {
       const response = await fetch(`${API_URL}/users`);
+      if (!response.ok) {
+        throw new Error('No se pudo obtener la lista de usuarios');
+      }
       const users = await response.json();
 
       const adminUser = users.find(u => u.user_name === formData.username && u.id_rol === 1);
 
-      if (!adminUser) {
-        setError('Usuario o contraseña incorrectos');
-        setLoading(false);
-        return;
-      }
-
-      if (adminUser.user_passw !== formData.password) {
+      // Verificación de existencia y contraseña
+      if (!adminUser || adminUser.user_passw !== formData.password) {
         setError('Usuario o contraseña incorrectos');
         setLoading(false);
         return;
       }
 
       setSuccess('¡Login exitoso! Redirigiendo...');
+      // Almacenamiento en localStorage (idealmente usarías Context o Firebase Auth)
       localStorage.setItem('adminCliente', JSON.stringify({
         id_user: adminUser.id_user,
         user_name: adminUser.user_name,
@@ -82,18 +93,19 @@ const LoginAdminCliente = () => {
       }));
 
       setTimeout(() => {
-      window.location.href = '/dashboard-admin';
+        // Usar useNavigate de react-router-dom es mejor, pero window.location.href funciona
+        window.location.href = '/dashboard-admin'; 
       }, 1500);
 
     } catch (err) {
-      setError('Error al conectar con el servidor');
+      console.error('Login Error:', err);
+      setError('Error al conectar con el servidor o credenciales incorrectas.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleRegister = async (e) => {
-    e.preventDefault();
     if (!validateForm()) return;
 
     setLoading(true);
@@ -101,7 +113,11 @@ const LoginAdminCliente = () => {
     setSuccess('');
 
     try {
+      // 1. Verificar si ya existe (GET)
       const usersResponse = await fetch(`${API_URL}/users`);
+      if (!usersResponse.ok) {
+        throw new Error('Error al verificar usuarios existentes');
+      }
       const users = await usersResponse.json();
 
       if (users.some(u => u.user_name === formData.username)) {
@@ -116,6 +132,7 @@ const LoginAdminCliente = () => {
         return;
       }
 
+      // 2. Intentar registrar (POST)
       const newUserResponse = await fetch(`${API_URL}/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -123,27 +140,32 @@ const LoginAdminCliente = () => {
           user_name: formData.username,
           user_passw: formData.password,
           correo: formData.email,
-          id_rol: 1
+          id_rol: 1 // Rol de Administrador/Cliente
         })
       });
 
       if (!newUserResponse.ok) {
-        throw new Error('Error al crear usuario');
+        // Si la respuesta POST no es OK (ej. 400, 500), lanzamos error.
+        throw new Error(`Error ${newUserResponse.status} al crear usuario. Revisa el backend.`);
       }
+
+      const newUser = await newUserResponse.json(); // Si el backend devuelve el objeto creado
 
       setSuccess('¡Registro exitoso! Iniciando sesión...');
       localStorage.setItem('adminCliente', JSON.stringify({
+        id_user: newUser.id_user || 'temp-id', // Asegúrate de obtener el ID real del backend
         user_name: formData.username,
         correo: formData.email,
         rol: 'ADMIN'
       }));
 
       setTimeout(() => {
-      window.location.href = '/dashboard-admin';
+        window.location.href = '/dashboard-admin';
       }, 1500);
 
     } catch (err) {
-      setError('Error al registrarse');
+      console.error('Registration Error:', err);
+      setError(`Error al registrarse: ${err.message || 'Verifica que tu servidor esté corriendo y maneje POST /users'}`);
     } finally {
       setLoading(false);
     }
@@ -171,7 +193,7 @@ const LoginAdminCliente = () => {
 
           <div className="flex gap-2 mb-8 bg-slate-700/30 rounded-lg p-1">
             <button
-              onClick={() => setIsLogin(true)}
+              onClick={() => { setIsLogin(true); setError(''); setSuccess(''); }}
               className={`flex-1 py-2 rounded-md font-semibold transition-all ${
                 isLogin
                   ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/50'
@@ -181,7 +203,7 @@ const LoginAdminCliente = () => {
               Iniciar Sesión
             </button>
             <button
-              onClick={() => setIsLogin(false)}
+              onClick={() => { setIsLogin(false); setError(''); setSuccess(''); }}
               className={`flex-1 py-2 rounded-md font-semibold transition-all ${
                 !isLogin
                   ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/50'
@@ -206,15 +228,17 @@ const LoginAdminCliente = () => {
             </div>
           )}
 
-          <div className="space-y-8">
+          {/* ESTRUCTURA DEL FORMULARIO PARA MANEJAR SUBMIT CON ENTER */}
+          <form onSubmit={handleAuth} className="space-y-8">
             
             <div>
-              <label className="block text-slate-300 text-sm font-semibold mb-2">
+              <label htmlFor="username" className="block text-slate-300 text-sm font-semibold mb-2">
                 Usuario
               </label>
               <div className="relative">
                 <User className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
                 <input
+                  id="username"
                   type="text"
                   name="username"
                   value={formData.username}
@@ -227,12 +251,13 @@ const LoginAdminCliente = () => {
 
             {!isLogin && (
               <div>
-                <label className="block text-slate-300 text-sm font-semibold mb-2">
+                <label htmlFor="email" className="block text-slate-300 text-sm font-semibold mb-2">
                   Email
                 </label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
                   <input
+                    id="email"
                     type="email"
                     name="email"
                     value={formData.email}
@@ -245,18 +270,20 @@ const LoginAdminCliente = () => {
             )}
 
             <div>
-              <label className="block text-slate-300 text-sm font-semibold mb-2">
+              <label htmlFor="password" className="block text-slate-300 text-sm font-semibold mb-2">
                 Contraseña
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
                 <input
+                  id="password"
                   type={showPassword ? 'text' : 'password'}
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="Mínimo 6 caracteres"
                   className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-12 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 transition-all"
+                  minLength={!isLogin ? 6 : undefined}
                 />
                 <button
                   type="button"
@@ -270,25 +297,27 @@ const LoginAdminCliente = () => {
 
             {!isLogin && (
               <div>
-                <label className="block text-slate-300 text-sm font-semibold mb-2">
+                <label htmlFor="passwordConfirm" className="block text-slate-300 text-sm font-semibold mb-2">
                   Confirmar Contraseña
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3.5 w-5 h-5 text-slate-500" />
                   <input
+                    id="passwordConfirm"
                     type={showPassword ? 'text' : 'password'}
                     name="passwordConfirm"
                     value={formData.passwordConfirm}
                     onChange={handleInputChange}
                     placeholder="Repite tu contraseña"
                     className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-12 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 transition-all"
+                    minLength={6}
                   />
                 </div>
               </div>
             )}
 
             <button
-              onClick={isLogin ? handleLogin : handleRegister}
+              type="submit" // Botón de submit del formulario
               disabled={loading}
               className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 disabled:from-slate-600 disabled:to-slate-600 text-white font-bold py-3 rounded-lg transition-all mt-6 flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/50"
             >
@@ -301,12 +330,13 @@ const LoginAdminCliente = () => {
                 isLogin ? 'Iniciar Sesión' : 'Registrarse'
               )}
             </button>
-          </div>
+          </form>
+          {/* Fin del Formulario */}
 
           <p className="text-center text-slate-400 text-xs mt-6">
             {isLogin ? '¿No tienes cuenta? ' : '¿Ya tienes cuenta? '}
             <button
-              onClick={() => setIsLogin(!isLogin)}
+              onClick={() => { setIsLogin(!isLogin); setError(''); setSuccess(''); }}
               className="text-cyan-400 hover:text-cyan-300 font-semibold"
             >
               {isLogin ? 'Registrate aquí' : 'Inicia sesión'}
