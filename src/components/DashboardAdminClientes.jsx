@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Trophy, Users, Calendar, Plus, BarChart3, Settings, LogOut, Edit2, Trash2, Eye } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; 
 
 const DashboardAdminClientes = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -12,7 +13,7 @@ const DashboardAdminClientes = () => {
   });
   const [adminData, setAdminData] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   const API_URL = 'http://localhost:3001';
 
   useEffect(() => {
@@ -21,6 +22,7 @@ const DashboardAdminClientes = () => {
       window.location.href = '/';
       return;
     }
+    
     setAdminData(admin);
     fetchData();
   }, []);
@@ -56,7 +58,7 @@ const DashboardAdminClientes = () => {
   };
 
   const handleCrearTorneo = () => {
-    alert('Funcionalidad de crear torneo próximamente');
+  window.location.href = '/crear-torneo';
   };
 
   return (
@@ -151,6 +153,7 @@ const DashboardAdminClientes = () => {
               >
                 <Plus className="w-5 h-5" />
                 Crear Nuevo Torneo
+                
               </button>
             </div>
 

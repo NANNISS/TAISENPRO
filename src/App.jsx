@@ -1,19 +1,16 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import LoginAdminCliente from './components/LoginAdminCliente';
-import DashboardAdminClientes from "./components/DashboardAdminClientes";
-import CrearTorneoWizard from './components/CrearTorneoWizard';
-import LandingTorneo from  './components/LandingTorneo';
-import RegistroEquipo from './components/RegistroEquipo';
-import RegistroJugadores from './components/RegistroJugadores';
-import ListaEquipos from './components/ListaEquipos';
-import MarcadorEnVivo from './components/MarcadorEnVivo';
-import MarcadorPublico from './components/MarcadorPublico';
 
 // Admin
-import LoginAdmin from './components/LoginAdminCliente';
+import LoginAdminCliente from './components/LoginAdminCliente';
 import DashboardAdminClientes from './components/DashboardAdminClientes';
 import CrearTorneoWizard from './components/CrearTorneoWizard';
+
+// Equipos
+import RegistroEquipo from './components/RegistroEquipo';
+import ListaEquipos from './components/ListaEquipos';
+
 // Jugador
+import RegistroJugadores from './components/RegistroJugadores'; // ⬅️ Sin 'es'
 import PerfilJugador from './components/PerfilJugador';
 import DashboardJugador from './components/DashboardJugador';
 import MiEquipo from './components/MiEquipo';
@@ -25,12 +22,13 @@ import RegistroIncidentes from './components/RegistroIncidentes';
 
 // Público
 import LandingPrincipal from './components/LandingPrincipal';
+import LandingTorneo from './components/LandingTorneo';
 import CuadroEliminatorias from './components/CuadroEliminatorias';
+import TablaClasificacion from './components/TablaClasificacion';
 
 // Partidos
 import MarcadorEnVivo from './components/MarcadorEnVivo';
 import MarcadorPublico from './components/MarcadorPublico';
-import TablaClasificacion from './components/TablaClasificacion';
 
 function App() {
   return (
@@ -47,16 +45,15 @@ function App() {
         <Route path="/dashboard-admin" element={<DashboardAdminClientes />} />
         <Route path="/crear-torneo" element={<CrearTorneoWizard />} />
         
-        
         {/* Equipos */}
         <Route path="/registro-equipo" element={<RegistroEquipo />} />
+        <Route path="/lista-equipos" element={<ListaEquipos />} />
         
         {/* Jugador */}
+        <Route path="/registro-jugadores" element={<RegistroJugadores />} />
         <Route path="/perfil-jugador" element={<PerfilJugador />} />
         <Route path="/dashboard-jugador" element={<DashboardJugador />} />
         <Route path="/mi-equipo" element={<MiEquipo />} />
-        <Route path="/registro-jugador" element={<RegistroJugadores />} />
-        <Route path="/lista-equipos" element={<ListaEquipos />} />
         
         {/* Árbitro */}
         <Route path="/login-arbitro" element={<LoginArbitro />} />
